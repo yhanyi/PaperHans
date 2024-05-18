@@ -1,7 +1,9 @@
+import React from "react";
+
 export default function Home() {
   return (
     <main>
-      <div>Welcome to PaperHans!</div>
+      <div>This is the playground page!</div>
     </main>
   );
 }
