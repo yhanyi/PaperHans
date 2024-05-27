@@ -8,38 +8,41 @@ A0269924M Han Yu (@xhamyo)
 
 A0269842N Yeoh Han Yi (@yhanyi)
 
-**Setup**
+**Setup** (Updated as of 27 May 2024)
 
 1. First `cd` into the project directory.
-
-Also need to add instructions on installing dependencies.
-
-For example,
-
-```zsh
-pip3 install flask flask-cors uvicorn
-```
 
 ```zsh
 cd PaperHans
 ```
 
-1. Run the development server.
-   Note: Need include better instructions on initializing backend.
+2. Install frontend dependencies.
 
-First, cd into the `backend` folder to start the FastAPI server:
+```zsh
+npm install
+```
+
+3. Install backend dependencies.
+
+```zsh
+pip3 install flask flask-cors uvicorn fastapi
+```
+
+Note: Look to Dockerize installation processes.
+
+4. Run the development backend. To do this, first cd into the `backend` folder.
 
 ```zsh
 cd backend
 uvicorn playground_io:app --reload
 ```
 
-Then cd back to the root of the project.
+5. Then cd back to the root of the project to run the development frontend.
 
 ```zsh
 cd ..
 npm run dev
 ```
 
-1. Go to http://localhost:3000 on your preferred browser.
-2. Alternatively, go to Vercel link that PaperHans is deployed on. (TO BE UPDATED)
+6. Go to http://localhost:3000 on your preferred browser.
+7. Alternatively, go to Vercel link that PaperHans is deployed on. (TO BE UPDATED)
