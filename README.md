@@ -17,10 +17,11 @@ cd PaperHans
 ```
 
 2. Run the development server.
+   Note: Need include better instructions on initializing backend.
 
 ```zsh
 npm run dev
 ```
 
-3. Go to http://localhost:3000 on your preferred browser.
-4. Alternatively, go to Vercel link that PaperHans is deployed on. (TO BE UPDATED)
+1. Go to http://localhost:3000 on your preferred browser.
+2. Alternatively, go to Vercel link that PaperHans is deployed on. (TO BE UPDATED)
