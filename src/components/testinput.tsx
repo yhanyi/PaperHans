@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UserInput: React.FC = () => {
+export default function UserInput() {
   const [num1, setNum1] = useState<string>("");
   const [num2, setNum2] = useState<string>("");
   const [response, setResponse] = useState<number | string>("");
@@ -17,7 +17,6 @@ const UserInput: React.FC = () => {
     event.preventDefault();
     try {
       const response = await fetch("http://127.0.0.1:8000/process", {
-        // Updated port to 8000
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,6 +55,4 @@ const UserInput: React.FC = () => {
       {response !== "" && <p>Sum: {response}</p>}
     </div>
   );
-};
-
-export default UserInput;
+}

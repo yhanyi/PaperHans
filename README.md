@@ -10,6 +10,8 @@ A0269842N Yeoh Han Yi (@yhanyi)
 
 **Setup** (Updated as of 27 May 2024)
 
+NOTE: Many functionalities are temporarily hardcoded. The tearsheet is a sample output from the trading script. Update the ALPACA_CREDS with your own Alpaca keys and credentials in `trading_script.py` for local testing.
+
 1. First `cd` into the project directory.
 
 ```zsh
