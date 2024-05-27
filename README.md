@@ -12,14 +12,32 @@ A0269842N Yeoh Han Yi (@yhanyi)
 
 1. First `cd` into the project directory.
 
+Also need to add instructions on installing dependencies.
+
+For example,
+
+```zsh
+pip3 install flask flask-cors uvicorn
+```
+
 ```zsh
 cd PaperHans
 ```
 
-2. Run the development server.
+1. Run the development server.
    Note: Need include better instructions on initializing backend.
 
+First, cd into the `backend` folder to start the FastAPI server:
+
 ```zsh
+cd backend
+uvicorn playground_io:app --reload
+```
+
+Then cd back to the root of the project.
+
+```zsh
+cd ..
 npm run dev
 ```
 

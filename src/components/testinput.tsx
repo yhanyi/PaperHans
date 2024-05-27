@@ -15,18 +15,24 @@ const UserInput: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await fetch("http://127.0.0.1:5000/process", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ num1, num2 }),
-    });
-    const data = await response.json();
-    if (data.error) {
-      setResponse(data.error);
-    } else {
-      setResponse(data.result);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/process", {
+        // Updated port to 8000
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ num1, num2 }),
+      });
+      const data = await response.json();
+      if (data.error) {
+        setResponse(data.error);
+      } else {
+        setResponse(data.result);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setResponse("An error occurred");
     }
   };
 
