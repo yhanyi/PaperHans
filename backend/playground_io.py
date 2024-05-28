@@ -16,14 +16,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Numbers(BaseModel):
-    num1: int
-    num2: int
+class BacktestParameters(BaseModel):
+    symbol: str
+    year: int
+    benchmark: str
 
 @app.post("/process")
-async def process_data(numbers: Numbers):
+async def process_data(bp: BacktestParameters):
     try:
-        result = await trade.test(numbers.num1, numbers.num2)
+        result = await trade.backtestStrategy(bp.symbol, bp.year, bp.benchmark)
+        cleanup_logs_files()
         return {"result": result}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -37,6 +39,26 @@ async def process_data(numbers: Numbers):
 #         raise HTTPException(status_code=404, detail=str(e))
 
 LOGS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'logs')
+
+def cleanup_logs_files():
+    trades_fp = os.path.join(LOGS_DIRECTORY, 'trades.html')
+    tearsheet_fp = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
+    if os.path.isfile(trades_fp):
+        os.remove(trades_fp)
+    if os.path.isfile(tearsheet_fp):
+        os.remove(tearsheet_fp)
+    files = os.listdir(LOGS_DIRECTORY)
+    for file in files:
+        file_path = os.path.join(LOGS_DIRECTORY, file)
+        if not file.endswith(".html"):
+            os.remove(file_path)
+        elif "trades" in file:
+            new_file_path = os.path.join(LOGS_DIRECTORY, 'trades.html')
+            os.rename(file_path, new_file_path)
+        elif "tearsheet" in file:
+            new_file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
+            os.rename(file_path, new_file_path)
+        
 
 # TODO: Remove hardcoding. Hardcoded to test functionality.
 @app.get("/tearsheet")
