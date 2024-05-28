@@ -1,5 +1,14 @@
 # Change Log
 
+## 28 May 2024
+
+Han Yi - 3.0 Hours
+
+- Adjusted the backend and included extra code to perform cleanup of logs after executing script.
+- Added a navbar/header.
+- Added dark mode (custom theme context).
+- Implemented a bit of frontend features.
+
 ## 27 May 2024
 
 Han Yi - 3.0 Hours

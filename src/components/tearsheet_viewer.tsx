@@ -24,7 +24,12 @@ export default function TearsheetViewer() {
 
   return (
     <div>
-      <button onClick={fetchTearsheet}>View Tearsheet</button>
+      <button
+        onClick={fetchTearsheet}
+        className="bg-black text-white dark:bg-white dark:text-black w-fit p-1 rounded-lg"
+      >
+        View Tearsheet
+      </button>
       {tearsheetUrl && (
         <iframe
           src={tearsheetUrl}

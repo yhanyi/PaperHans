@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../components/header";
 import ThemeContextProvider from "@/components/theme_context";
+import ThemeSwitch from "@/components/theme_switch";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <ThemeContextProvider>
           <Header />
           {children}
+          <ThemeSwitch />
         </ThemeContextProvider>
       </body>
     </html>

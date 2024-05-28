@@ -6,9 +6,9 @@ import BacktestInput from "@/components/backtest_input";
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col gap-10">
       <div>This is the playground page!</div>
-      <div>
+      <div className="flex flex-col gap-20">
         <h1>Input the parameters you would like to backtest.</h1>
         <BacktestInput />
         <TearsheetViewer />

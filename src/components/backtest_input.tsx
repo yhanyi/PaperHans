@@ -45,28 +45,45 @@ export default function BacktestInput() {
   return (
     <div className="flex flex-col border-black border-1px border">
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <input
-          type="text"
-          value={symbol}
-          onChange={handleTradeChange}
-          placeholder="Enter trade symbol. (Example: SPY)"
-        />
-        <input
-          type="text"
-          value={year}
-          onChange={handleYearChange}
-          placeholder="Enter backtest year. (Example: 2023)"
-        />
-        <input
-          type="text"
-          value={benchmark}
-          onChange={handleBenchmarkChange}
-          placeholder="Enter benchmark asset. (Example: QQQ)"
-        />
-        <button type="submit" className="bg-gray-400 w-fit">
-          Submit
-        </button>
+        <div className="gap-5 flex flex-row">
+          <p>Enter your trading symbol:</p>
+          <input
+            type="text"
+            value={symbol}
+            onChange={handleTradeChange}
+            placeholder="Default: SPY"
+            className=""
+          />
+        </div>
+
+        <div className="gap-5 flex flex-row">
+          <p>Enter the year you want to backtest on:</p>
+          <input
+            type="text"
+            value={year}
+            onChange={handleYearChange}
+            placeholder="Default: 2023"
+            className="w-fit"
+          />
+        </div>
+
+        <div className="gap-5 flex flex-row">
+          <p>Enter your benchmark asset/stock:</p>
+          <input
+            type="text"
+            value={benchmark}
+            onChange={handleBenchmarkChange}
+            placeholder="Default: SPY/QQQ"
+            className="w-fit"
+          />
+        </div>
       </form>
+      <button
+        type="submit"
+        className="bg-black text-white dark:bg-white dark:text-black w-fit p-1 rounded-lg"
+      >
+        Submit
+      </button>
       {response !== "" && <p>{response}</p>}
     </div>
   );
