@@ -3,12 +3,13 @@ from lumibot.brokers import Alpaca
 from lumibot.backtesting import YahooDataBacktesting
 from lumibot.strategies.strategy import Strategy
 from lumibot.traders import Trader
+from lumibot.entities import Asset
 import math
-import os # Maybe can remove after testing.
 from datetime import datetime, timedelta
 
+# Version 1 MLTrader
 class MLTrader(Strategy):
-    def initialize(self, symbol="SPY", cash_at_risk=0.5):
+    def initialize(self, symbol, cash_at_risk=0.5):
         self.symbol = symbol
         self.sleeptime = "24H"
         self.last_trade = None
@@ -24,35 +25,42 @@ class MLTrader(Strategy):
             self.submit_order(order)
             self.last_trade = "buy"
 
-async def test(a, b):
-  # await asyncio.sleep(10) # Simulate a 10s computation
+async def backtestStrategy(symbol, year, benchmark):
   # ALPACA_CREDS = {
   #   "API_KEY": os.getenv("ALPACA_KEY"),
   #   "API_SECRET": os.getenv("ALPACA_SECRET"),
   #   "PAPER": True
   # }
-  ALPACA_CREDS = {
-    "API_KEY": "",
-    "API_SECRET": "",
-    "PAPER": True
-  }
-  print(ALPACA_CREDS)
-  broker = Alpaca(ALPACA_CREDS)
-  strategy = MLTrader(name="mlstrategy",
-                      broker=broker,
-                      parameters={
-                          "symbol": "SPY",
-                      })
+  state = "Backtest Complete"
+  try:
+    ALPACA_CREDS = {
+      "API_KEY": "",
+      "API_SECRET": "",
+      "PAPER": True
+    }
+    broker = Alpaca(ALPACA_CREDS)
+    strategy = MLTrader(name="mlstrategy",
+                        broker=broker,
+                        parameters={
+                            "symbol": symbol.upper(),
+                        })
+  
 
-  start_date = datetime(2023, 12, 1)
-  end_date = datetime(2023, 12, 31)
+    start_date = datetime(year, 12, 1)
+    end_date = datetime(year, 12, 31)
 
-  strategy.backtest(
-      YahooDataBacktesting,
-      start_date,
-      end_date,
-      parameters={
-          "symbol": "SPY",
-      }
-  )
-  return a + b
+    print(symbol)
+    strategy.backtest(
+        YahooDataBacktesting,
+        start_date,
+        end_date,
+        benchmark_asset=benchmark.upper(),
+        parameters={
+            "symbol": symbol.upper(),
+        },
+        show_tearsheet=False,
+        show_plot=False
+    )
+  except:
+     state = "Error encountered while backtesting."
+  return state
