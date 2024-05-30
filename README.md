@@ -27,7 +27,7 @@ npm install
 3. Install backend dependencies.
 
 ```zsh
-pip3 install flask flask-cors uvicorn fastapi
+pip3 install flask flask-cors uvicorn fastapi torch torchvision torchaudio transformers
 ```
 
 Note: Look to Dockerize installation processes.
