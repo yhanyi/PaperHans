@@ -1,5 +1,12 @@
 # Change Log
 
+## 30 May 2024
+
+Han Yi - 2.0 Hours
+
+- Hardcoded handling of basic sentiment analysis with pretrained finbert model.
+- Updated trading script to first integrate cash_at_risk options and then sentiment analysis with finbert.
+
 ## 28 May 2024
 
 Han Yi - 3.0 Hours
