@@ -13,19 +13,30 @@ class MLTrader(Strategy):
         self.symbol = symbol
         self.sleeptime = "24H"
         self.last_trade = None
+        self.cash_at_risk = cash_at_risk
+
+    def position_sizing(self):
+        cash = self.get_cash()
+        last_price = self.get_last_price(self.symbol)
+        quantity = math.floor(cash * self.cash_at_risk / last_price)
+        return cash, last_price, quantity
 
     def on_trading_iteration(self):
-        if self.last_trade == None:
-            order = self.create_order(
-                self.symbol,
-                10,
-                "buy",
-                type="market",
-            )
-            self.submit_order(order)
-            self.last_trade = "buy"
+        cash, last_price, quantity = self.position_sizing()
+        if cash > last_price:
+            if self.last_trade == None:
+                order = self.create_order(
+                    self.symbol,
+                    quantity,
+                    "buy",
+                    type="bracket",
+                    take_profit_price=last_price*1.2,
+                    stop_loss_price=last_price*0.95
+                )
+                self.submit_order(order)
+                self.last_trade = "buy"
 
-async def backtestStrategy(symbol, year, benchmark):
+async def backtestStrategy(symbol, year, benchmark, cash_at_risk):
   # ALPACA_CREDS = {
   #   "API_KEY": os.getenv("ALPACA_KEY"),
   #   "API_SECRET": os.getenv("ALPACA_SECRET"),
@@ -43,13 +54,12 @@ async def backtestStrategy(symbol, year, benchmark):
                         broker=broker,
                         parameters={
                             "symbol": symbol.upper(),
+                            "cash_at_risk": cash_at_risk
                         })
   
 
-    start_date = datetime(year, 12, 1)
+    start_date = datetime(year, 1, 1)
     end_date = datetime(year, 12, 31)
-
-    print(symbol)
     strategy.backtest(
         YahooDataBacktesting,
         start_date,
@@ -57,6 +67,7 @@ async def backtestStrategy(symbol, year, benchmark):
         benchmark_asset=benchmark.upper(),
         parameters={
             "symbol": symbol.upper(),
+            "cash_at_risk": cash_at_risk
         },
         show_tearsheet=False,
         show_plot=False

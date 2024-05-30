@@ -20,6 +20,7 @@ class BacktestParameters(BaseModel):
     symbol: str
     year: int
     benchmark: str
+    cash_at_risk: float
 
 @app.post("/process")
 async def process_data(bp: BacktestParameters):

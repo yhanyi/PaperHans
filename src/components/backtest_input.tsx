@@ -4,6 +4,7 @@ export default function BacktestInput() {
   const [symbol, setSymbol] = useState<string>("");
   const [year, setYear] = useState<string>("");
   const [benchmark, setBenchmark] = useState<string>("");
+  const [cashAtRisk, setCashAtRisk] = useState<string>("");
   const [response, setResponse] = useState<number | string>("");
 
   const handleTradeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +19,10 @@ export default function BacktestInput() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setBenchmark(event.target.value);
+  };
+
+  const handleCashChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCashAtRisk(event.target.value);
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -74,6 +79,17 @@ export default function BacktestInput() {
             value={benchmark}
             onChange={handleBenchmarkChange}
             placeholder="Default: SPY/QQQ"
+            className="w-fit"
+          />
+        </div>
+
+        <div className="gap-5 flex flex-row">
+          <p>Enter your cash-at-risk proportion:</p>
+          <input
+            type="text"
+            value={cashAtRisk}
+            onChange={handleCashChange}
+            placeholder="Default: 0.5"
             className="w-fit"
           />
         </div>
