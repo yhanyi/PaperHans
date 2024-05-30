@@ -24,10 +24,11 @@ cd PaperHans
 npm install
 ```
 
-3. Install backend dependencies.
+3. Install python dependencies.
 
 ```zsh
-pip3 install flask flask-cors uvicorn fastapi torch torchvision torchaudio transformers
+pip3 install flask flask-cors uvicorn fastapi # Backend
+pip3 install torch torchvision torchaudio transformers # ML / Sentiment analysis
 ```
 
 Note: Look to Dockerize installation processes.
