@@ -1,6 +1,23 @@
 # Change Log
 
+## 31 May 2024
+
+Han Yu - 5.0 Hours
+
+- Improved robustness of sign-up page. Signing up now requires confirmation email and password. sign-up page now validates for email and password
+  complexity (min. 8 characters, inclusive of special characters, uppercase and lowercase) as well as check if all fields are filled. Throws ErrorPopUp otherwise.
+- Improved robustness of sign-in page. sign-in page now validates if the user exists as well as checks if all fields are filled.
+- Added AuthButton component at top-right corner of Home for easy access to sign-in and sign-out feature.
+- Added ErrorPopUp component to push Error messages to user at middle of screen.
+
 ## 30 May 2024
+
+Han Yu - 3.0 Hours
+
+- Set up firebase for authentication services, config at .env.local.
+- Added sign-in page, handles email and password.
+- Added sign-up page, handles email and password.
+- Integrated sign-in/ sign-up button with Home.
 
 Han Yi - 2.0 Hours
 
