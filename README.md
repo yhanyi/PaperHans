@@ -24,14 +24,6 @@ Proposed Level of Achievement: Apollo 11
 
 **1. Setup** (Updated as of 27 May 2024)
 
-**firebase config here to ease testing only** (to be under .env.local)
-NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyD2l4nT2UuSmWfni8I_p11g66X7gE-GJbI
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=paperhans.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=paperhans
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=paperhans.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=46418266008
-NEXT_PUBLIC_FIREBASE_APP_ID=1:46418266008:web:c8ebdaf148fd5de24fcded
-
 NOTE: Many functionalities are temporarily hardcoded. The tearsheet is a sample output from the trading script. Update the ALPACA_CREDS with your own Alpaca keys and credentials in `trading_script.py` for local testing.
 
 1. First `cd` into the project directory.

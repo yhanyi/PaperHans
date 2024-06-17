@@ -1,4 +1,5 @@
 "use client"
+import { motion } from "framer-motion";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,11 @@ const AuthButton = () => {
   const router = useRouter();
 
   return (
-    <div className="absolute top-4 right-4 flex flex-col items-end">
+    <motion.div
+      className="absolute top-8 right-8 flex flex-col items-end"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+    >
       {user ? (
         <>
           <button
@@ -30,7 +35,7 @@ const AuthButton = () => {
           Sign In
         </button>
       )}
-    </div>
+    </motion.div>
   );
 };
 
