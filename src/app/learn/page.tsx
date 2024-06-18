@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <motion.div
-        className="absolute top-8 right-8 flex items-center"
+        className="fixed top-8 right-8 flex items-center"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >

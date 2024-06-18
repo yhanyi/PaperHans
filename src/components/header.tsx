@@ -12,6 +12,10 @@ const links = [
     hash: "/",
   },
   {
+    name: "Prices",
+    hash: "/prices",
+  },
+  {
     name: "Playground",
     hash: "/playground",
   },
@@ -29,11 +33,12 @@ export default function Header() {
   return (
     <main>
       {/* <Link href="/">Home</Link>
+      <Link href="prices">Prices</Link>
       <Link href="playground">Playground</Link>
       <Link href="/news">News</Link>
       <Link href="/learn">Learn</Link>*/}
       <motion.div
-        className="absolute top-8 left-8 flex items-center"
+        className="fixed top-8 left-8 flex items-center"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >

@@ -11,7 +11,7 @@ const AuthButton = () => {
 
   return (
     <motion.div
-      className="absolute top-8 right-8 flex flex-col items-end"
+      className="fixed top-8 right-8 flex flex-col items-end"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
     >
