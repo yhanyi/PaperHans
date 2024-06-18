@@ -17,11 +17,13 @@ export default function Home() {
         <h1 className="text-4xl font-bold">Playground</h1>
         <Image src="/images/Playground.png" alt="Playground" width={48} height={48}/>
       </motion.div>
-      <div>This is the playground page!</div>
-      <div className="flex flex-col gap-20">
-        <h1>Input the parameters you would like to backtest.</h1>
-        <BacktestInput />
-        <TearsheetViewer />
+      <div className="flex flex-col items-center space-y-5">
+          <h1 className="text-4xl font-bold">Playground</h1>
+        <div className="flex flex-col gap-20">
+          <h1 className="text-xl font-bold">Input the parameters you would like to backtest.</h1>
+          <BacktestInput />
+          <TearsheetViewer />
+        </div>
       </div>
     </main>
   );

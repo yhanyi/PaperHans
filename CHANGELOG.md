@@ -4,12 +4,14 @@
 
 Han Yi - 15.0 Hours
 
-Han Yu - 45.0 Hours
+Han Yu - 47.0 Hours
+
 
 ## 18 June 2024
 
-Han Yu - 6.0 Hours (Learning a Technology)
+Han Yu - 8.0 Hours (Learning a Technology, Coding and Debugging)
 - Watched introductory videos to self-learn CoinGecko API.
+- Added About Us page (Replaced Explore in Home page).
 - Added Prices page for real-time cryptocurrency data.
 - Fixed bug where PaperHans logo, Page icon and AuthButton moves with scroll.
 

@@ -30,6 +30,7 @@ export default function Home() {
           return crypto;
         } catch (error) {
           console.error(`Error fetching data for ${cryptoId}:`, error);
+          errorMessage.innerHTML="Error Fetching (Too Many Requests). Please try again later."
           return null;
         }
       });
@@ -51,8 +52,8 @@ export default function Home() {
           <h1 className="text-4xl font-bold">Prices</h1>
           <Image src="/images/BTCwCandles.png" alt="BTC with Candles" width={48} height={48}/>
         </motion.div>
-        <div className="flex flex-col items-center space-y-8">
-          <h1 className="text-4xl font-bold">Real-Time Cryptocurrency Prices</h1>
+        <div className="flex flex-col items-center space-y-5">
+          <h1 className="text-4xl font-bold">Cryptocurrency Prices</h1>
           {cryptoData.map((crypto, index) => (
             <div key={index} className="flex items-center space-x-4">
               <img src={crypto.logoUrl} alt={`${crypto.name} logo`} width={60}/>
@@ -63,12 +64,14 @@ export default function Home() {
               </div>
             </div>
           ))}
+          <h3 className="text-xl font-bold" id="errorMessage"></h3>
         </div>
         <div className="fixed bottom-8 left-0 right-0 flex justify-center">
           <div className="bg-gray-200 p-4 rounded-lg shadow-md dark:bg-gray-950 dark:border-black/40 dark:bg-opacity/75">
-            <h1 className="text-sm font-bold text-center">Powered by CoinGecko API.</h1>
+            <h1 className="text-sm font-bold text-center">Powered by CoinGecko</h1>
           </div>
         </div>
+        <div className="h-16"></div>
       </main>
     );
 };
