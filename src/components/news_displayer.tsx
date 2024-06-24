@@ -3,6 +3,7 @@ import axios from "axios";
 
 type NewsItem = {
   title: string;
+  info: string;
   url: string;
   sentiment: string;
 };
@@ -56,10 +57,10 @@ const News = () => {
               <span
                 className={`ml-2 px-2 py-1 rounded ${
                   item.sentiment === "positive"
-                    ? "bg-green-200"
+                    ? "bg-green-200 dark:bg-green-600"
                     : item.sentiment === "negative"
-                    ? "bg-red-200"
-                    : "bg-yellow-200"
+                    ? "bg-red-200 dark:bg-red-600"
+                    : "bg-yellow-200 dark:bg-yellow-600"
                 }`}
               >
                 {item.sentiment}
@@ -67,14 +68,14 @@ const News = () => {
             </div>
             {expanded === index && (
               <div className="p-4 border-t">
-                <p className="mb-2">Detailed summary or synopsis here...</p>
+                <p className="mb-2">{item.info}</p>
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 underline"
                 >
-                  Read more
+                  Click for details.
                 </a>
               </div>
             )}
