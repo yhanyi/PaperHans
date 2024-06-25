@@ -1,13 +1,30 @@
 import React from "react";
 import { useTheme } from "../components/theme_context";
 
-const ErrorPopUp = ({ message, onClose }) => {
+type ErrorProps = {
+  message: string;
+  onClose: () => void;
+};
+
+const ErrorPopUp = ({ message, onClose }: ErrorProps) => {
   const { theme } = useTheme();
 
   return (
-    <div className={`fixed inset-0 flex items-center justify-center z-50 ${theme === 'dark' ? 'bg-gray-900 bg-opacity-50' : 'bg-gray-300 bg-opacity-50'}`}>
-      <div className={`${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} p-6 rounded shadow-lg`}>
-        <h2 className="text-xl font-bold mb-4">Oops! Something went wrong... :(</h2>
+    <div
+      className={`fixed inset-0 flex items-center justify-center z-50 ${
+        theme === "dark"
+          ? "bg-gray-900 bg-opacity-50"
+          : "bg-gray-300 bg-opacity-50"
+      }`}
+    >
+      <div
+        className={`${
+          theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+        } p-6 rounded shadow-lg`}
+      >
+        <h2 className="text-xl font-bold mb-4">
+          Oops! Something went wrong... :(
+        </h2>
         <p className="text-red-500 font-bold">{message}</p>
         <button
           onClick={onClose}

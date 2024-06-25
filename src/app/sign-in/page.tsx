@@ -12,14 +12,14 @@ const SignIn = () => {
   const { theme } = useTheme();
 
   // User fields.
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // Firebase.
-  const [ signInWithEmailAndPassword ] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   // For Error handling, throw ErrorPopUp.
-  const [ error, setError ] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignIn = async () => {
     try {
@@ -39,7 +39,7 @@ const SignIn = () => {
 
       // Redirect User to Home after successful Sign-In.
       router.push("/");
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
       setError(e.message); // Set the error message to the state
     }
@@ -55,18 +55,30 @@ const SignIn = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`w-full p-3 mb-4 rounded outline-none ${theme === 'dark' ? 'bg-gray-700 text-white placeholder-gray-500' : 'bg-gray-300 text-gray-800 placeholder-gray-600'}`}
+          className={`w-full p-3 mb-4 rounded outline-none ${
+            theme === "dark"
+              ? "bg-gray-700 text-white placeholder-gray-500"
+              : "bg-gray-300 text-gray-800 placeholder-gray-600"
+          }`}
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className={`w-full p-3 mb-4 rounded outline-none ${theme === 'dark' ? 'bg-gray-700 text-white placeholder-gray-500' : 'bg-gray-300 text-gray-800 placeholder-gray-600'}`}
+          className={`w-full p-3 mb-4 rounded outline-none ${
+            theme === "dark"
+              ? "bg-gray-700 text-white placeholder-gray-500"
+              : "bg-gray-300 text-gray-800 placeholder-gray-600"
+          }`}
         />
         <button
           onClick={handleSignIn}
-          className={`w-full p-3 rounded ${theme === 'dark' ? 'bg-indigo-600 text-white hover:bg-indigo-500' : 'bg-indigo-500 text-white hover:bg-indigo-400'}`}
+          className={`w-full p-3 rounded ${
+            theme === "dark"
+              ? "bg-indigo-600 text-white hover:bg-indigo-500"
+              : "bg-indigo-500 text-white hover:bg-indigo-400"
+          }`}
         >
           Sign In
         </button>
