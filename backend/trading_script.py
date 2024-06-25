@@ -6,6 +6,10 @@ from lumibot.entities import Asset
 import math
 from datetime import datetime, timedelta
 from modelzoo import finbert_estimate_sentiment
+from dotenv import load_dotenv
+import os
+
+load_dotenv
 
 # Version 1 MLTrader
 class MLTrader(Strategy):
@@ -68,16 +72,11 @@ class MLTrader(Strategy):
                 self.last_trade = "sell"
 
 async def backtestStrategy(symbol, year, benchmark, cash_at_risk):
-  # ALPACA_CREDS = {
-  #   "API_KEY": os.getenv("ALPACA_KEY"),
-  #   "API_SECRET": os.getenv("ALPACA_SECRET"),
-  #   "PAPER": True
-  # }
   state = "Backtest Complete"
   try:
     ALPACA_CREDS = {
-      "API_KEY": "",
-      "API_SECRET": "",
+      "API_KEY": os.getenv("ALPACA_KEY"),
+      "API_SECRET": os.getenv("ALPACA_SECRET"),
       "PAPER": True
     }
     broker = Alpaca(ALPACA_CREDS)
