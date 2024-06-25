@@ -2,15 +2,16 @@
 
 **Hours cumulated**
 
-Han Yi - 23.0 Hours
+Han Yi - 27.0 Hours
 
 Han Yu - 47.0 Hours
 
 ## 25 June 2024
 
-Han Yi - 1.0 Hours (Coding and Debugging)
+Han Yi - 5.0 Hours (Coding and Debugging)
 
 - Miscellaneous typing-related code fixes for prod deployment on Vercel.
+- Updated news page to display NewsAPI's cryptocurrency pages, including a summary and link to the news.
 
 ## 24 June 2024
 

@@ -24,9 +24,11 @@ Proposed Level of Achievement: Apollo 11
 
 **1. Setup** (Updated as of 25 June 2024)
 
-UPDATE: Run `sh start.sh` from the root directory of the project to automatically build.
+Run `sh start.sh` from the root directory of the project to automatically build.
 
-NOTE: Many functionalities are temporarily hardcoded. Update the ALPACA_CREDS with your own Alpaca keys and credentials in `trading_script.py` for local testing.
+Note: Our API keys are currently deployed onto the Vercel as well. We'll implement a feature to collect and store API keys for each user.
+
+To manually run:
 
 1. First `cd` into the project directory.
 
@@ -47,14 +49,14 @@ pip3 install flask flask-cors uvicorn fastapi
 pip3 install torch torchvision torchaudio transformers
 ```
 
-4. Run the development backend. To do this, first cd into the `backend` folder.
+4. Run the development backend.
 
 ```zsh
 cd backend
 uvicorn playground_io:app --reload
 ```
 
-5. Then cd back to the root of the project to run the development frontend.
+5. Run the development frontend.
 
 ```zsh
 cd ..
@@ -62,7 +64,6 @@ npm run dev
 ```
 
 6. Go to http://localhost:3000 on your preferred browser.
-7. Alternatively, go to Vercel link that PaperHans is deployed on. (TO BE UPDATED)
 
 **2. Project Poster and Video Links** (Updated as of 2 June 2024)
 
