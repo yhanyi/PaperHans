@@ -1,51 +1,48 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from yahoofinancials import YahooFinancials
-import requests
+import yfinance as yf
 from transformers import pipeline
+import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
+
 sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert")
+
+def fetch_crypto_news(query='cryptocurrency'):
+    url = f'https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}'
+    response = requests.get(url)
+    data = response.json()
+    return data['articles']
+
+def process_news(news):
+    processed_news = []
+    for item in news:
+        processed_news.append({
+            "title": item.get("title", "No Title"),
+            "info": item.get("description", "No Description"),
+            "url": item.get("url", "No URL")
+        })
+    return processed_news
+
+def analyze_sentiment(news):
+    for item in news:
+        sentiment = sentiment_pipeline(item['info'])
+        item['sentiment'] = sentiment[0]['label']
+    return news
 
 @app.route('/api/news', methods=['GET'])
 def get_news():
-
-    # Hardcoded data temporarily
-    news_data = [
-        {
-            "title": "Bitcoin hits new all-time high",
-            "info": "Bitcoin has hit a new all-time high of $60,000",
-            "url": "https://www.google.com"
-        },
-        {
-            "title": "Ethereum upgrade expected to boost performance",
-            "info": "Ethereum is expected to upgrade to Ethereum 2.0",
-            "url": "https://www.google.com"
-        },
-        {
-            "title": "DogeCoin completely tanks.",
-            "info": "DogeCoin has seen a massive drop in value.",
-            "url": "https://www.google.com"
-        },
-        {
-            "title": "Elon Musk laughs at crypto bros, meme coins see fat drop.",
-            "info": "Elon Musk has made fun of meme coins on Twitter.",
-            "url": "https://www.google.com"
-        },
-        {
-            "title": "GamestopCoin sees uncertain future.",
-            "info": "GamestopCoin has seen a drop in value.",
-            "url": "https://www.google.com"
-        }, 
-    ]
-    
-    for news in news_data:
-        sentiment = sentiment_pipeline(news["title"])[0]
-        news["sentiment"] = sentiment["label"].lower()
-
-    return jsonify(news_data)
+    news = fetch_crypto_news()
+    processed_news = process_news(news)
+    news_with_sentiment = analyze_sentiment(processed_news)
+    return jsonify(news_with_sentiment)
 
 if __name__ == '__main__':
     app.run(debug=True)
