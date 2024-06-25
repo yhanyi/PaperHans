@@ -9,6 +9,9 @@ model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert").t
 labels = ["positive", "negative", "neutral"]
 
 def finbert_estimate_sentiment(news):
+    """
+    Takes a list of news and returns the general sentiment of the news.
+    """
     if not news:
         return 0, labels[-1]
 
