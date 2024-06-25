@@ -14,4 +14,3 @@ npm run dev
 
 # Wait for all processes to finish.
 wait
-echo "All processes finished, ready for dev testing."
