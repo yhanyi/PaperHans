@@ -30,14 +30,6 @@ async def process_data(bp: BacktestParameters):
         return {"result": result}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-# @app.get("/tearsheet/{filename}")
-# async def get_tearsheet(filename: str):
-#     try:
-#         file_path = os.path.join(LOGS_DIRECTORY, filename)
-#         return FileResponse(file_path, media_type='text/html')
-#     except Exception as e:
-#         raise HTTPException(status_code=404, detail=str(e))
 
 LOGS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'logs')
 
