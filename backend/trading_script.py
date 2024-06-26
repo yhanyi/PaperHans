@@ -7,9 +7,10 @@ import math
 from datetime import datetime, timedelta
 from modelzoo import finbert_estimate_sentiment
 from dotenv import load_dotenv
+from alpaca_trade_api.rest import REST
 import os
 
-load_dotenv
+load_dotenv()
 
 # Version 1 MLTrader
 class MLTrader(Strategy):
@@ -18,6 +19,9 @@ class MLTrader(Strategy):
         self.sleeptime = "24H"
         self.last_trade = None
         self.cash_at_risk = cash_at_risk
+        self.api = REST(base_url="https://paper-api.alpaca.markets",
+                        key_id=os.getenv("ALPACA_KEY"),
+                        secret_key=os.getenv("ALPACA_SECRET"))
 
     def position_sizing(self):
         cash = self.get_cash()
