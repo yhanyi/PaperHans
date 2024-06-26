@@ -26,7 +26,7 @@ export default function TearsheetViewer() {
     <div>
       <button
         onClick={fetchTearsheet}
-        className="bg-black text-white dark:bg-white dark:text-black w-fit p-1 rounded-lg"
+        className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
       >
         View Tearsheet
       </button>
