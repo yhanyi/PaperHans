@@ -18,14 +18,14 @@ app.add_middleware(
 
 class BacktestParameters(BaseModel):
     symbol: str
-    year: int
+    year: str
     benchmark: str
-    cash_at_risk: float
+    cashAtRisk: str
 
 @app.post("/process")
 async def process_data(bp: BacktestParameters):
     try:
-        result = await trade.backtestStrategy(bp.symbol, bp.year, bp.benchmark)
+        result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk))
         cleanup_logs_files()
         return {"result": result}
     except Exception as e:
