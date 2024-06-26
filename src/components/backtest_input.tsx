@@ -33,7 +33,7 @@ export default function BacktestInput() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ symbol, year, benchmark }),
+        body: JSON.stringify({ symbol, year, benchmark, cashAtRisk }),
       });
       const data = await response.json();
       if (data.error) {
@@ -48,58 +48,59 @@ export default function BacktestInput() {
   };
 
   return (
-    <div className="flex flex-col border-black border-1px border">
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <div className="gap-5 flex flex-row">
+    <div className="flex flex-col gap-20">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+        <div className="gap-5 flex flex-row items-center">
           <p>Enter your trading symbol:</p>
           <input
             type="text"
             value={symbol}
             onChange={handleTradeChange}
             placeholder="Default: SPY"
-            className=""
+            className="w-fit text-center bg-transparent border border-1px border-black dark:border-white rounded-xl p-1"
           />
         </div>
 
-        <div className="gap-5 flex flex-row">
+        <div className="gap-5 flex flex-row items-center">
           <p>Enter the year you want to backtest on:</p>
           <input
             type="text"
             value={year}
             onChange={handleYearChange}
             placeholder="Default: 2023"
-            className="w-fit"
+            className="w-fit text-center bg-transparent border border-1px border-black dark:border-white rounded-xl p-1"
           />
         </div>
 
-        <div className="gap-5 flex flex-row">
+        <div className="gap-5 flex flex-row items-center">
           <p>Enter your benchmark asset/stock:</p>
           <input
             type="text"
             value={benchmark}
             onChange={handleBenchmarkChange}
             placeholder="Default: SPY/QQQ"
-            className="w-fit"
+            className="w-fit text-center bg-transparent border border-1px border-black dark:border-white rounded-xl p-1"
           />
         </div>
 
-        <div className="gap-5 flex flex-row">
+        <div className="gap-5 flex flex-row items-center">
           <p>Enter your cash-at-risk proportion:</p>
           <input
             type="text"
             value={cashAtRisk}
             onChange={handleCashChange}
             placeholder="Default: 0.5"
-            className="w-fit"
+            className="w-fit text-center bg-transparent border border-1px border-black dark:border-white rounded-xl p-1"
           />
+
+          <button
+            type="submit"
+            className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+          >
+            Submit
+          </button>
         </div>
       </form>
-      <button
-        type="submit"
-        className="bg-black text-white dark:bg-white dark:text-black w-fit p-1 rounded-lg"
-      >
-        Submit
-      </button>
       {response !== "" && <p>{response}</p>}
     </div>
   );
