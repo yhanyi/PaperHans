@@ -52,8 +52,6 @@ def cleanup_logs_files():
             new_file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
             os.rename(file_path, new_file_path)
         
-
-# TODO: Remove hardcoding. Hardcoded to test functionality.
 @app.get("/tearsheet")
 async def get_tearsheet():
     try:
