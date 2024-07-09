@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import TearsheetViewer from "@/components/tearsheet_viewer";
 import BacktestInput from "@/components/backtest_input";
+import AlpacaKeyForm from "@/components/AlpacaKeyForm";
 
 export default function Home() {
   return (
@@ -36,6 +37,7 @@ export default function Home() {
             height={48}
           />
         </motion.div>
+        <AlpacaKeyForm />
         <div className="flex flex-col gap-20 items-center justify-center">
           <h1 className="text-base md:text-xl font-bold">
             Input the parameters you would like to backtest.
