@@ -58,7 +58,7 @@ async def get_tearsheet():
         file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
         if not os.path.isfile(file_path):
             raise HTTPException(status_code=404, detail="Tearsheet not found")
-        return FileResponse(file_path, media_type='text/html')
+        return FileResponse(file_path, media_type='text/html', filename='tearsheet.html')
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
