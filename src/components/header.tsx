@@ -58,8 +58,8 @@ export default function Header() {
     //   </header>
     // </main>
     <header className="duration-500 z-[10] py-2 fixed top-0 flex justify-between md:justify-center w-full px-2 md:px-10 bg-light dark:bg-dark bg-opacity-80 dark:bg-opacity-80 gap-10">
-      <div className="flex">
-        <h1 className="hidden md:flex text-base md:text-2xl font-bold">
+      <Link href="/" className="flex gap-2">
+        <h1 className="hidden md:flex text-base md:text-2xl font-bold items-center">
           PaperHans
         </h1>
         <Image
@@ -68,7 +68,7 @@ export default function Header() {
           width={48}
           height={48}
         />
-      </div>
+      </Link>
       <nav className="hidden md:flex justify-center items-center py-0 border border-white border-opacity-40 bg-white bg-opacity-80 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] h-[3.25rem] sm:w-[40rem] w-[20rem] rounded-full dark:bg-black dark:border-black/40 dark:bg-opacity/75">
         <ul className="flex w-[22rem] flex-wrap items-center justify-center gap-y-1 text-[0.9rem] font-medium text-gray-500 dark:text-gray-400 sm:w-[initial] gap-5">
           {links.map((link) => (

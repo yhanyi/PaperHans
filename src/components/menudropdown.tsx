@@ -11,8 +11,8 @@ import React, {
 } from "react";
 
 type OptionProps = {
-  text: "Home" | "About Us" | "Prices" | "Playground" | "News" | "Learn";
-  href: "/" | "/aboutUs" | "/prices" | "/playground" | "/news" | "/learn";
+  text: "About Us" | "Prices" | "Playground" | "News" | "Learn";
+  href: "/aboutUs" | "/prices" | "/playground" | "/news" | "/learn";
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -82,7 +82,6 @@ export default function MenuDropdown() {
           style={{ originY: "top", translateX: "-80%" }}
           className="flex flex-col gap-2 p-2 rounded-lg bg-white dark:bg-black shadow-xl absolute top-[120%] left-[50%] overflow-hidden"
         >
-          <Option setOpen={setOpen} text="Home" href="/" />
           <Option setOpen={setOpen} text="About Us" href="/aboutUs" />
           <Option setOpen={setOpen} text="Prices" href="/prices" />
           <Option setOpen={setOpen} text="Playground" href="/playground" />
