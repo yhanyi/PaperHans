@@ -7,10 +7,12 @@ import clsx from "clsx";
 import Image from "next/image";
 import MenuDropdown from "./menudropdown";
 import AuthButton from "./AuthButton";
-
+import { useActiveSectionContext } from "./ActiveSectionContext";
 import { links } from "@/lib/links-data";
 
 export default function Header() {
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSectionContext();
   return (
     // <main>
     //   <motion.div
@@ -78,15 +80,21 @@ export default function Header() {
             >
               <Link
                 href={link.hash}
+                onClick={() => {
+                  setActiveSection(link.name);
+                  setTimeOfLastClick(Date.now());
+                }}
                 className="flex w-full items-center justify-center px-2 py-3 hover:text-black transition dark:hover:text-white"
               >
                 {link.name}
 
-                {/* <motion.span
-                  layoutId="activeSection"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  className="bg-gray-100 rounded-full absolute inset-0 -z-10 dark:bg-gray-800"
-                ></motion.span> */}
+                {link.name === activeSection && (
+                  <motion.span
+                    layoutId="activeSection"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    className="bg-gray-100 rounded-full absolute inset-0 -z-10 dark:bg-gray-800"
+                  ></motion.span>
+                )}
               </Link>
             </li>
           ))}

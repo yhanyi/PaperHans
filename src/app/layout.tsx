@@ -4,6 +4,9 @@ import "./globals.css";
 import Header from "../components/header";
 import ThemeContextProvider from "@/components/theme_context";
 import ThemeSwitch from "@/components/theme_switch";
+import ActiveSectionContextProvider, {
+  ActiveSectionContext,
+} from "@/components/ActiveSectionContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +26,11 @@ export default function RootLayout({
         className={`${inter.className} bg-gray-50 text-gray-950 relative pt-28 sm:pt-36 dark:bg-gray-900 dark:text-gray-50 dark:text-opacity-90`}
       >
         <ThemeContextProvider>
-          <Header />
-          {children}
-          <ThemeSwitch />
+          <ActiveSectionContextProvider>
+            <Header />
+            {children}
+            <ThemeSwitch />
+          </ActiveSectionContextProvider>
         </ThemeContextProvider>
       </body>
     </html>
