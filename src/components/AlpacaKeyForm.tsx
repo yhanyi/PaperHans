@@ -34,15 +34,21 @@ const AlpacaKeyForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="gap-5 flex flex-row items-center">
       <input
         type="text"
         placeholder="Enter Alpaca API Key"
         value={apiKey}
         onChange={(e) => setApiKey(e.target.value)}
+        className="w-fit text-center bg-transparent border border-1px border-black dark:border-white rounded-xl p-1"
         required
       />
-      <button type="submit">Save API Key</button>
+      <button
+        type="submit"
+        className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+      >
+        Save API Key
+      </button>
     </form>
   );
 };
