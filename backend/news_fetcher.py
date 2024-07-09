@@ -1,10 +1,10 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-import yfinance as yf
 from transformers import pipeline
 import requests
 from dotenv import load_dotenv
 import os
+import datetime
 
 load_dotenv()
 
@@ -16,7 +16,9 @@ NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert")
 
 def fetch_crypto_news(query='cryptocurrency'):
-    url = f'https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}'
+    today = datetime.date.today()
+    startdate = today - datetime.timedelta(days=60)
+    url = f'https://newsapi.org/v2/everything?q={query}&from={startdate.strftime}&sortBy=publishedAt&apiKey={NEWS_API_KEY}&language=en'
     response = requests.get(url)
     data = response.json()
     return data['articles']
@@ -33,8 +35,11 @@ def process_news(news):
 
 def analyze_sentiment(news):
     for item in news:
-        sentiment = sentiment_pipeline(item['info'])
-        item['sentiment'] = sentiment[0]['label']
+        try:
+          sentiment = sentiment_pipeline(item['info'])
+          item['sentiment'] = sentiment[0]['label'].capitalize()
+        except:
+          item['sentiment'] = 'Error'
     return news
 
 @app.route('/api/news', methods=['GET'])
@@ -45,4 +50,4 @@ def get_news():
     return jsonify(news_with_sentiment)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
