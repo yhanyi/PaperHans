@@ -14,22 +14,28 @@ const News = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:5000/api/news");
-        console.log("News data:", response.data); // Log the fetched data
-        setNews(response.data);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-        setError("Error fetching news");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchNews = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/api/news");
+      console.log("News data:", response.data);
+      setNews(response.data);
+      setError(null);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      setError("Error fetching news");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchNews();
   }, []);
+
+  const handleRefresh = () => {
+    fetchNews();
+  };
 
   const toggleExpand = (index: number) => {
     setExpanded(expanded === index ? null : index);
@@ -45,7 +51,15 @@ const News = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Crypto News</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold mb-4">Crypto News</h1>
+        <button
+          onClick={handleRefresh}
+          className="refresh-button p-2 bg-blue-500 text-white rounded-md"
+        >
+          Refresh
+        </button>
+      </div>
       <ul>
         {news.map((item, index) => (
           <li key={index} className="mb-4">
@@ -56,9 +70,9 @@ const News = () => {
               <span>{item.title}</span>
               <span
                 className={`ml-2 px-2 py-1 rounded ${
-                  item.sentiment === "positive"
+                  item.sentiment === "Positive"
                     ? "bg-green-200 dark:bg-green-600"
-                    : item.sentiment === "negative"
+                    : item.sentiment === "Negative"
                     ? "bg-red-200 dark:bg-red-600"
                     : "bg-yellow-200 dark:bg-yellow-600"
                 }`}
