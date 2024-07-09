@@ -24,9 +24,6 @@ export default function Home() {
           <h1 className="text-2xl md:text-4xl font-bold">Learn</h1>
           <Image src="/images/Learn.png" alt="Learn" width={48} height={48} />
         </motion.div>
-        <div className="flex flex-col items-center space-y-5">
-          <h1 className="text-4xl font-bold">Learn</h1>
-        </div>
       </div>
     </main>
   );
