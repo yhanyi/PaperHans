@@ -56,7 +56,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col gap-10">
-      <motion.div
+      {/* <motion.div
         className="fixed top-8 right-8 flex items-center"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -68,9 +68,24 @@ export default function Home() {
           width={48}
           height={48}
         />
-      </motion.div>
+      </motion.div> */}
       <div className="flex flex-col items-center space-y-5">
-        <h1 className="text-4xl font-bold">Cryptocurrency Prices</h1>
+        {/* <h1 className="text-4xl font-bold">Cryptocurrency Prices</h1> */}
+        <motion.div
+          className="flex items-center gap-2"
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+        >
+          <h1 className="text-2xl md:text-4xl font-bold">
+            Cryptocurrency Prices
+          </h1>
+          <Image
+            src="/images/BTCwCandles.png"
+            alt="BTC with Candles"
+            width={48}
+            height={48}
+          />
+        </motion.div>
         {cryptoData.map((crypto, index) => (
           <div key={index} className="flex items-center space-x-4">
             <img src={crypto.logoUrl} alt={`${crypto.name} logo`} width={60} />
