@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useActiveSectionContext } from "./ActiveSectionContext";
 
 type OptionProps = {
   text: "About Us" | "Prices" | "Playground" | "News" | "Learn";
@@ -17,13 +18,22 @@ type OptionProps = {
 };
 
 const Option = ({ text, href, setOpen }: OptionProps) => {
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSectionContext();
+
   return (
     <React.Fragment>
-      <Link href={href}>
+      <Link
+        href={href}
+        onClick={() => {
+          setActiveSection(text);
+          setTimeOfLastClick(Date.now());
+        }}
+      >
         <motion.li
           variants={itemVariants}
           onClick={() => setOpen(false)}
-          className="text-black dark:text-white flex items-center gap-2 px-4 w-full p-2 text-sm font-medium whitespace-nowrap rounded-md hover:bg-primaryDark hover:text-black transition-colors cursor-pointer"
+          className="text-black dark:text-white flex items-center gap-2 px-4 w-full p-2 text-sm font-medium whitespace-nowrap rounded-md hover:bg-gray-400 hover:text-black transition-colors cursor-pointer"
         >
           <span>{text}</span>
         </motion.li>
