@@ -92,14 +92,13 @@ export default function BacktestInput() {
             placeholder="Default: 0.5"
             className="w-fit text-center bg-transparent border border-1px border-black dark:border-white rounded-xl p-1"
           />
-
-          <button
-            type="submit"
-            className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
-          >
-            Submit
-          </button>
         </div>
+        <button
+          type="submit"
+          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+        >
+          Submit
+        </button>
       </form>
       {response !== "" && <p>{response}</p>}
     </div>
