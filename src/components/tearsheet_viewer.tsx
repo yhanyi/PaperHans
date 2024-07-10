@@ -1,7 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function TearsheetViewer() {
   const [tearsheetUrl, setTearsheetUrl] = useState<string>("");
+  localStorage.getItem("tearsheetUrl") || "";
+  const [backtestStatus, setBacktestStatus] = useState<string>("idle");
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/status`);
+        const data = await response.json();
+        setBacktestStatus(data.status);
+
+        if (data.status === "complete") {
+          fetchTearsheet();
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    if (backtestStatus === "running") {
+      const interval = setInterval(checkStatus, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [backtestStatus]);
 
   const fetchTearsheet = async () => {
     try {
@@ -17,6 +40,7 @@ export default function TearsheetViewer() {
         URL.revokeObjectURL(tearsheetUrl);
       }
       setTearsheetUrl(url);
+      localStorage.setItem("tearsheetUrl", url);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -45,13 +69,21 @@ export default function TearsheetViewer() {
   };
 
   return (
-    <div className="gap-5 flex">
-      <button
-        onClick={fetchTearsheet}
-        className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
-      >
-        View Tearsheet
-      </button>
+    <div className="flex flex-col w-screen gap-20">
+      <div className="flex flex-row gap-10 items-center justify-center">
+        <button
+          onClick={fetchTearsheet}
+          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+        >
+          View Tearsheet
+        </button>
+        <button
+          onClick={downloadTearsheet}
+          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+        >
+          Download Tearsheet
+        </button>
+      </div>
       {tearsheetUrl && (
         <iframe
           src={tearsheetUrl}
@@ -60,12 +92,6 @@ export default function TearsheetViewer() {
           height="600px"
         ></iframe>
       )}
-      <button
-        onClick={downloadTearsheet}
-        className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
-      >
-        Download Tearsheet
-      </button>
     </div>
   );
 }

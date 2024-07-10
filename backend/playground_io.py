@@ -22,14 +22,24 @@ class BacktestParameters(BaseModel):
     benchmark: str
     cashAtRisk: str
 
+# Caches backtesting status
+backtest_status = {"status":"idle"}
+
 @app.post("/process")
 async def process_data(bp: BacktestParameters):
     try:
+        backtest_status["status"] = "running"
         result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk))
+        backtest_status["status"] = "complete"
         cleanup_logs_files()
         return {"result": result}
     except Exception as e:
+        backtest_status["status"] = "error"
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/status")
+async def get_status():
+    return backtest_status
 
 LOGS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'logs')
 
