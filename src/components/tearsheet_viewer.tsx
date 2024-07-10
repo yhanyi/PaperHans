@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 
 export default function TearsheetViewer() {
   const [tearsheetUrl, setTearsheetUrl] = useState<string>("");
-  localStorage.getItem("tearsheetUrl") || "";
   const [backtestStatus, setBacktestStatus] = useState<string>("idle");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedUrl = window.localStorage.getItem("tearsheetUrl") || "";
+      setTearsheetUrl(savedUrl);
+    }
+  }, []);
 
   useEffect(() => {
     const checkStatus = async () => {
