@@ -1,7 +1,7 @@
 # Start Flask server
 echo "Starting Flask server."
 cd backend
-python3 news_fetcher.py &
+python3.11 news_fetcher.py &
 
 # Start Uvicorn server
 echo "Starting Uvicorn server."
