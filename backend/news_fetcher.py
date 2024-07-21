@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from transformers import pipeline
 import requests
@@ -20,8 +20,10 @@ def fetch_crypto_news(query='cryptocurrency'):
     startdate = today - datetime.timedelta(days=60)
     url = f'https://newsapi.org/v2/everything?q={query}&from={startdate.strftime}&sortBy=publishedAt&apiKey={NEWS_API_KEY}&language=en'
     response = requests.get(url)
+    if response.status_code == 429:
+        return None, response.status_code
     data = response.json()
-    return data['articles']
+    return data['articles'], response.status_code
 
 def process_news(news):
     processed_news = []
@@ -44,7 +46,9 @@ def analyze_sentiment(news):
 
 @app.route('/api/news', methods=['GET'])
 def get_news():
-    news = fetch_crypto_news()
+    news, status_code = fetch_crypto_news()
+    if status_code == 429:
+        return make_response(jsonify({"error": "Rate limit exceeded. Please try again later."}), 429)
     processed_news = process_news(news)
     news_with_sentiment = analyze_sentiment(processed_news)
     return jsonify(news_with_sentiment)

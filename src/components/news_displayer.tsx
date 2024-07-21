@@ -26,17 +26,24 @@ const News = () => {
   const [sortBy, setSortBy] = useState<string>("publishedAt");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
 
   const fetchNews = async () => {
     setLoading(true);
     try {
       const response = await axios.get("http://127.0.0.1:5000/api/news");
       console.log("News data:", response.data);
-      setNews(response.data);
-      setError(null);
+      if (response.status === 429) {
+        setError("Rate limit exceeded. Please try again later.");
+        setErrorModalOpen(true);
+      } else {
+        setNews(response.data);
+        setError(null);
+      }
     } catch (error) {
       console.error("Error fetching news:", error);
       setError("Error fetching news");
+      setErrorModalOpen(true);
     } finally {
       setLoading(false);
     }
@@ -84,6 +91,10 @@ const News = () => {
     setModalOpen(false);
   };
 
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
+  };
+
   const filteredNews = news
     .filter(
       (item) =>
@@ -98,10 +109,11 @@ const News = () => {
           Positive: 1,
           Neutral: 2,
           Negative: 3,
+          Error: 4,
         };
         return sentimentOrder[a.sentiment] - sentimentOrder[b.sentiment];
       }
-      return 0; // Default sorting by published date (as fetched from API)
+      return 0;
     });
 
   if (loading) {
@@ -153,19 +165,30 @@ const News = () => {
         </select>
       </div>
       {error && (
-        <Snackbar
-          open={Boolean(error)}
-          autoHideDuration={6000}
-          onClose={() => setError(null)}
-        >
-          <Alert
-            onClose={() => setError(null)}
-            severity="error"
-            sx={{ width: "100%" }}
+        <Modal open={errorModalOpen} onClose={handleErrorModalClose}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 2,
+            }}
           >
-            {error}
-          </Alert>
-        </Snackbar>
+            <p>{error}</p>
+            <p>Please check again in a bit!</p>
+            <button
+              onClick={handleErrorModalClose}
+              className="close-modal-button p-2 bg-red-500 text-white rounded-md"
+            >
+              Close
+            </button>
+          </Box>
+        </Modal>
       )}
       <ul>
         {filteredNews.map((item, index) => (
