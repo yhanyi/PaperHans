@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function BacktestInput() {
   const [symbol, setSymbol] = useState<string>("");
@@ -27,6 +29,7 @@ export default function BacktestInput() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    toast.info("Backtest is running, you will be notified when it's done.");
     try {
       const response = await fetch("http://127.0.0.1:8000/process", {
         method: "POST",
@@ -38,12 +41,15 @@ export default function BacktestInput() {
       const data = await response.json();
       if (data.error) {
         setResponse(data.error);
+        toast.error("An error occurred: " + data.error);
       } else {
         setResponse(data.result);
+        toast.success("Backtest complete!");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error:", error);
       setResponse("An error occurred");
+      toast.error("An error occurred: " + error.message);
     }
   };
 

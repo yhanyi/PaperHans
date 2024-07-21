@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTearsheetContext } from "./tearsheet-context";
 
 export default function TearsheetViewer() {
-  const [tearsheetUrl, setTearsheetUrl] = useState<string>("");
-  const [backtestStatus, setBacktestStatus] = useState<string>("idle");
+  const {
+    tearsheetUrl,
+    setTearsheetUrl,
+    backtestStatus,
+    setBacktestStatus,
+    tearsheetStatus,
+  } = useTearsheetContext();
+  const [showTearsheet, setShowTearsheet] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedUrl = window.localStorage.getItem("tearsheetUrl") || "";
       setTearsheetUrl(savedUrl);
     }
-  }, []);
+  }, [setTearsheetUrl]);
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -19,7 +28,9 @@ export default function TearsheetViewer() {
         setBacktestStatus(data.status);
 
         if (data.status === "complete") {
-          fetchTearsheet();
+          setShowTearsheet(true);
+        } else if (data.status === "error") {
+          toast.error("An error occurred during backtest");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -27,10 +38,10 @@ export default function TearsheetViewer() {
     };
 
     if (backtestStatus === "running") {
-      const interval = setInterval(checkStatus, 5000);
+      const interval = setInterval(checkStatus, 1000);
       return () => clearInterval(interval);
     }
-  }, [backtestStatus]);
+  }, [backtestStatus, setBacktestStatus, setTearsheetUrl]);
 
   const fetchTearsheet = async () => {
     try {
@@ -38,6 +49,7 @@ export default function TearsheetViewer() {
         `http://127.0.0.1:8000/tearsheet?timestamp=${new Date().getTime()}`
       );
       if (!response.ok) {
+        toast.error("Error fetching tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
       }
       const blob = await response.blob();
@@ -58,6 +70,7 @@ export default function TearsheetViewer() {
         `http://127.0.0.1:8000/tearsheet?timestamp=${new Date().getTime()}`
       );
       if (!response.ok) {
+        toast.error("Error downloading tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
       }
       const blob = await response.blob();
@@ -74,7 +87,11 @@ export default function TearsheetViewer() {
     }
   };
 
-  const clearCache = async () => {};
+  const clearCache = () => {
+    setTearsheetUrl("");
+    setShowTearsheet(false);
+    toast.success("Cache cleared!");
+  };
 
   return (
     <div className="flex flex-col w-screen gap-20">
@@ -92,7 +109,7 @@ export default function TearsheetViewer() {
           Download Tearsheet
         </button>
         <button
-          onClick={downloadTearsheet}
+          onClick={clearCache}
           className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
         >
           Clear Cache
