@@ -10,8 +10,11 @@ export default function TearsheetViewer() {
     backtestStatus,
     setBacktestStatus,
     tearsheetStatus,
+    showTearsheet,
+    setShowTearsheet,
+    tearsheetDone,
+    setTearsheetDone,
   } = useTearsheetContext();
-  const [showTearsheet, setShowTearsheet] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -52,6 +55,7 @@ export default function TearsheetViewer() {
         toast.error("Error fetching tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
       }
+      setShowTearsheet(true);
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       if (tearsheetUrl) {
@@ -88,41 +92,47 @@ export default function TearsheetViewer() {
   };
 
   const clearCache = () => {
-    setTearsheetUrl("");
     setShowTearsheet(false);
+    setTearsheetDone(false);
     toast.success("Cache cleared!");
   };
 
   return (
     <div className="flex flex-col w-screen gap-20">
-      <div className="flex flex-row gap-10 items-center justify-center">
-        <button
-          onClick={fetchTearsheet}
-          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
-        >
-          View Tearsheet
-        </button>
-        <button
-          onClick={downloadTearsheet}
-          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
-        >
-          Download Tearsheet
-        </button>
-        <button
-          onClick={clearCache}
-          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
-        >
-          Clear Cache
-        </button>
+      <div className="flex flex-col gap-10 items-center justify-center">
+        {tearsheetDone ? (
+          <div className="flex flex-row gap-5">
+            <button
+              onClick={fetchTearsheet}
+              className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+            >
+              View Tearsheet
+            </button>
+            <button
+              onClick={downloadTearsheet}
+              className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+            >
+              Download Tearsheet
+            </button>
+            <button
+              onClick={clearCache}
+              className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+            >
+              Clear Cache
+            </button>
+          </div>
+        ) : (
+          <p>No tearsheet available</p>
+        )}
+        {tearsheetDone && showTearsheet && (
+          <iframe
+            src={tearsheetUrl}
+            title="Tearsheet"
+            width="100%"
+            height="600px"
+          ></iframe>
+        )}
       </div>
-      {tearsheetUrl && (
-        <iframe
-          src={tearsheetUrl}
-          title="Tearsheet"
-          width="100%"
-          height="600px"
-        ></iframe>
-      )}
     </div>
   );
 }

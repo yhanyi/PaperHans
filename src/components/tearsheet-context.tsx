@@ -8,6 +8,10 @@ interface TearsheetContextType {
   setBacktestStatus: (status: string) => void;
   tearsheetStatus: string;
   setTearsheetStatus: (status: string) => void;
+  showTearsheet: boolean;
+  setShowTearsheet: (show: boolean) => void;
+  tearsheetDone: boolean;
+  setTearsheetDone: (done: boolean) => void;
 }
 
 const TearsheetContext = createContext<TearsheetContextType | undefined>(
@@ -20,7 +24,8 @@ export const TearsheetProvider: React.FC<{ children: ReactNode }> = ({
   const [tearsheetUrl, setTearsheetUrl] = useState<string>("");
   const [backtestStatus, setBacktestStatus] = useState<string>("idle");
   const [tearsheetStatus, setTearsheetStatus] = useState<string>("idle");
-
+  const [showTearsheet, setShowTearsheet] = useState<boolean>(false);
+  const [tearsheetDone, setTearsheetDone] = useState<boolean>(false);
   return (
     <TearsheetContext.Provider
       value={{
@@ -30,6 +35,10 @@ export const TearsheetProvider: React.FC<{ children: ReactNode }> = ({
         setBacktestStatus,
         tearsheetStatus,
         setTearsheetStatus,
+        showTearsheet,
+        setShowTearsheet,
+        tearsheetDone,
+        setTearsheetDone,
       }}
     >
       {children}
