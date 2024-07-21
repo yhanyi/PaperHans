@@ -55,7 +55,21 @@ const News = () => {
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(event.target.value);
+    const selectedSort = event.target.value;
+    setSortBy((prevSortBy) => {
+      if (prevSortBy === selectedSort) {
+        if (selectedSort === "sentiment") {
+          const reversedNews = [...news].reverse();
+          setNews(reversedNews);
+        }
+        if (selectedSort === "publishedAt") {
+          fetchNews();
+        }
+      } else {
+        setSortBy(selectedSort);
+      }
+      return selectedSort;
+    });
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,11 +84,21 @@ const News = () => {
     setModalOpen(false);
   };
 
-  const filteredNews = news.filter(
-    (item) =>
-      item.title?.toLowerCase().includes(searchTerm?.toLowerCase() ?? "") ||
-      item.info?.toLowerCase().includes(searchTerm?.toLowerCase() ?? "")
-  );
+  const filteredNews = news
+    .filter(
+      (item) =>
+        item.title?.toLowerCase().includes(searchTerm?.toLowerCase() ?? "") ||
+        item.info?.toLowerCase().includes(searchTerm?.toLowerCase() ?? "")
+    )
+    .sort((a, b) => {
+      if (sortBy === "title") {
+        return a.title.localeCompare(b.title);
+      } else if (sortBy === "sentiment") {
+        const sentimentOrder = { Positive: 1, Neutral: 2, Negative: 3 };
+        return sentimentOrder[a.sentiment] - sentimentOrder[b.sentiment];
+      }
+      return 0; // Default sorting by published date (as fetched from API)
+    });
 
   if (loading) {
     return (
