@@ -90,11 +90,15 @@ const News = () => {
         item.title?.toLowerCase().includes(searchTerm?.toLowerCase() ?? "") ||
         item.info?.toLowerCase().includes(searchTerm?.toLowerCase() ?? "")
     )
-    .sort((a, b) => {
+    .sort((a: NewsItem, b: NewsItem) => {
       if (sortBy === "title") {
         return a.title.localeCompare(b.title);
       } else if (sortBy === "sentiment") {
-        const sentimentOrder = { Positive: 1, Neutral: 2, Negative: 3 };
+        const sentimentOrder: { [key: string]: number } = {
+          Positive: 1,
+          Neutral: 2,
+          Negative: 3,
+        };
         return sentimentOrder[a.sentiment] - sentimentOrder[b.sentiment];
       }
       return 0; // Default sorting by published date (as fetched from API)
