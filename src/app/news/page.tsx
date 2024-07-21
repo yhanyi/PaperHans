@@ -8,14 +8,6 @@ import News from "@/components/news_displayer";
 export default function Home() {
   return (
     <main>
-      {/* <motion.div
-        className="fixed top-8 right-8 flex items-center"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-      >
-        <h1 className="text-4xl font-bold">News</h1>
-        <Image src="/images/News.png" alt="News" width={48} height={48} />
-      </motion.div> */}
       <div className="flex flex-col items-center space-y-5">
         <motion.div
           className="flex items-center gap-2"
@@ -25,7 +17,7 @@ export default function Home() {
           <h1 className="text-2xl md:text-4xl font-bold">News</h1>
           <Image src="/images/News.png" alt="News" width={48} height={48} />
         </motion.div>
-        <div>
+        {/* <div>
           <img
             className="mx-auto"
             src="https://alternative.me/crypto/fear-and-greed-index.png"
@@ -37,7 +29,7 @@ export default function Home() {
           <h1 className="text-lg md:text-xl font-bold">
             Current Fear and Greed Index
           </h1>
-        </div>
+        </div> */}
         <div>
           <News />
         </div>
