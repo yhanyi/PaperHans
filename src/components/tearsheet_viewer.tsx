@@ -74,6 +74,8 @@ export default function TearsheetViewer() {
     }
   };
 
+  const clearCache = async () => {};
+
   return (
     <div className="flex flex-col w-screen gap-20">
       <div className="flex flex-row gap-10 items-center justify-center">
@@ -88,6 +90,12 @@ export default function TearsheetViewer() {
           className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
         >
           Download Tearsheet
+        </button>
+        <button
+          onClick={downloadTearsheet}
+          className="text-black dark:text-white w-fit p-1 rounded-lg border border-1 border-black dark:border-white"
+        >
+          Clear Cache
         </button>
       </div>
       {tearsheetUrl && (

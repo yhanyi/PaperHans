@@ -7,6 +7,7 @@ import ThemeSwitch from "@/components/theme_switch";
 import ActiveSectionContextProvider, {
   ActiveSectionContext,
 } from "@/components/ActiveSectionContext";
+import { TearsheetProvider } from "@/components/tearsheet-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +28,11 @@ export default function RootLayout({
       >
         <ThemeContextProvider>
           <ActiveSectionContextProvider>
-            <Header />
-            {children}
-            <ThemeSwitch />
+            <TearsheetProvider>
+              <Header />
+              {children}
+              <ThemeSwitch />
+            </TearsheetProvider>
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
       </body>
