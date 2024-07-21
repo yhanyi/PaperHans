@@ -7,6 +7,8 @@ import ThemeSwitch from "@/components/theme_switch";
 import ActiveSectionContextProvider, {
   ActiveSectionContext,
 } from "@/components/ActiveSectionContext";
+import { TearsheetProvider } from "@/components/tearsheet-context";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +29,12 @@ export default function RootLayout({
       >
         <ThemeContextProvider>
           <ActiveSectionContextProvider>
-            <Header />
-            {children}
-            <ThemeSwitch />
+            <TearsheetProvider>
+              <Header />
+              <ToastContainer position="top-right" autoClose={5000} />
+              {children}
+              <ThemeSwitch />
+            </TearsheetProvider>
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
       </body>
