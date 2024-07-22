@@ -88,7 +88,12 @@ export default function Home() {
         </motion.div>
         {cryptoData.map((crypto, index) => (
           <div key={index} className="flex items-center space-x-4">
-            <img src={crypto.logoUrl} alt={`${crypto.name} logo`} width={60} />
+            <Image
+              src={crypto.logoUrl}
+              alt={`${crypto.name} logo`}
+              width={60}
+              height={60}
+            />
             <div>
               <h2 className="text-xl font-bold">{crypto.name}</h2>
               <p>Price: {crypto.price.toFixed(2)} SGD</p>

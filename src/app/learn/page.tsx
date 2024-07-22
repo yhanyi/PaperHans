@@ -120,6 +120,7 @@ export default function Home() {
       )}
       {questionsList.map(question => (
         <LearnQuestions
+          key={question.qn}
           question={question.qn}
           options={question.options}
           correctAnswerIndex={question.answer}/>
