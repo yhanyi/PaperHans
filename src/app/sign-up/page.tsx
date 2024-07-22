@@ -43,7 +43,7 @@ const SignUp = () => {
         password === "" ||
         confirmPassword === ""
       ) {
-        throw new Error("Please fill in all required fields.");
+        throw new Error("Please fill in all the required fields.");
       } else if (email !== confirmEmail) {
         throw new Error("Emails do not match!");
       } else if (password !== confirmPassword) {
@@ -52,7 +52,7 @@ const SignUp = () => {
         throw new Error("Invalid email!");
       } else if (!validatePassword(password)) {
         throw new Error(
-          "Password requirement not met! [min. 8 chars, 1 special, 1 upper & 1 lowercase char]"
+          "Password requirements not met! Minimum of 8 characters, and Special (e.g. ! @ # $), Uppercase, Lowercase characters required."
         );
       }
 

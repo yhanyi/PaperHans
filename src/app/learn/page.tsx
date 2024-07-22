@@ -86,23 +86,23 @@ export default function Home() {
       <div className="flex space-x-4">
         <button
           onClick={() => { pushLesson('bitcoin'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-8 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > BTC </button>
         <button
           onClick={() => { pushLesson('ethereum'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-8 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > ETH </button>
         <button
           onClick={() => { pushLesson('ripple-xrp'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-8 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > XRP </button>
         <button
           onClick={() => { pushLesson('binance-coin'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-8 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > BNB </button>
         <button
           onClick={() => { pushLesson('cronos'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-8 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > CRO </button>
       </div>
 

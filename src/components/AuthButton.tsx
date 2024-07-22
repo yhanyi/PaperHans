@@ -11,29 +11,31 @@ const AuthButton = () => {
 
   return (
     <motion.div
-      className="flex items-center"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
     >
       {user ? (
-        <>
+        <div className="flex flex-col items-center w-32">
           <button
             onClick={() => signOut(auth)}
-            className="bg-red-600 text-white text-base md:text-lg font-medium px-4 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
-          >
+            className="bg-red-600 text-white text-base md:text-sm font-medium py-1 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all w-24">
             Log Out
           </button>
-          <p className="text-sm mt-2 text-right">
-            Signed in as {user.displayName || "User"}.
-          </p>
-        </>
+          <h1 className="text-xs mt-2">
+            Welcome {user.displayName || "User"}!
+          </h1>
+        </div>
       ) : (
-        <button
+        <div className="flex flex-col items-center w-32">
+          <button
           onClick={() => router.push("/sign-in")}
-          className="bg-indigo-600 text-white text-base font-medium px-4 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
-        >
+          className="bg-indigo-600 text-white text-base md:text-sm font-medium py-1 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all w-24">
           Sign In
-        </button>
+          </button>
+          <h1 className="text-xs mt-2">
+              To access all features!
+          </h1>
+        </div>
       )}
     </motion.div>
   );
