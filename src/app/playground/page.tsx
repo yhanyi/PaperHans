@@ -1,15 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import TearsheetViewer from "@/components/tearsheet_viewer";
 import BacktestInput from "@/components/backtest_input";
 import AlpacaKeyForm from "@/components/AlpacaKeyForm";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { AchievementsHelper } from "@/components/Achievements";
+import SignInRedirect from "@/components/SignInRedirect";
 
 export default function Home() {
+
+  const[ user ] = useAuthState(auth)
+  useEffect(() => {
+    const loadPage = async () => {
+      if (user) {
+        await AchievementsHelper(user, 'visitedPlayground');
+      }
+    };
+    loadPage();
+  }, [user]);
+
   return (
-    <main className="flex flex-col gap-10 center ">
+    <main className="flex flex-col gap-10 center "> {user?
       <div className="flex flex-col items-center space-y-5">
         <motion.div
           className="flex items-center gap-2"
@@ -32,7 +47,7 @@ export default function Home() {
           <BacktestInput />
           <TearsheetViewer />
         </div>
-      </div>
+      </div>:<SignInRedirect></SignInRedirect>}
     </main>
   );
 }

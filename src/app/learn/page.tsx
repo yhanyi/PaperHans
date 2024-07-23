@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore"
 import { db } from "@/app/firebase/config"
 import LearnQuestions from "../../components/LearnQuestions";
 import LearnInfo from "../../components/LearnInfo";
+import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { AchievementsHelper } from "@/components/Achievements";
+import SignInRedirect from "@/components/SignInRedirect";
 
 export default function Home() {
+
+  const router = useRouter();
+  const[ user ] = useAuthState(auth)
 
   interface Lesson {
     name: string;
@@ -53,7 +61,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center space-y-5">
+    <main className="flex flex-col items-center space-y-5">{user?<>
       <motion.div
         className="flex items-center gap-2"
         initial={{ y: -15, opacity: 0.5 }}
@@ -106,7 +114,7 @@ export default function Home() {
           correctAnswerIndex={question.answer}/>
       ))}
 
-      <div className="h-8"></div>
+      <div className="h-8"></div></>:<SignInRedirect></SignInRedirect>}
 
     </main>
   );

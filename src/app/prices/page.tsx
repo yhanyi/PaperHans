@@ -3,15 +3,29 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
-interface CryptoData {
-  name: string;
-  logoUrl: string;
-  price: number;
-  percentChange: number;
-}
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { AchievementsHelper } from "@/components/Achievements";
 
 export default function Home() {
+
+  const[ user ] = useAuthState(auth)
+  useEffect(() => {
+    const loadPage = async () => {
+      if (user) {
+        await AchievementsHelper(user, 'visitedPrices');
+      }
+    };
+    loadPage();
+  }, [user]);
+
+  interface CryptoData {
+    name: string;
+    logoUrl: string;
+    price: number;
+    percentChange: number;
+  }
+
   const [ cryptoData, setCryptoData ] = useState<CryptoData[]>([]);
   const supportedCryptos = [
     "bitcoin",

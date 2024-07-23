@@ -1,14 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import Profile from "../../components/Profile";
 import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { AchievementsHelper } from "@/components/Achievements";
+import SignInRedirect from "@/components/SignInRedirect";
 
 export default function Home() {
 
+  const[ user ] = useAuthState(auth)
+  useEffect(() => {
+    const loadPage = async () => {
+      if (user) {
+        await AchievementsHelper(user, 'visitedProfile');
+      }
+    };
+    loadPage();
+  }, [user]);
+
   return (
-    <main>
+    <main>{user?
       <div className="flex flex-col items-center space-y-5">
         <motion.div
           className="flex items-center gap-2"
@@ -20,7 +34,8 @@ export default function Home() {
         </motion.div>
 
         <Profile ></Profile>
-      </div>
+
+      </div>:<SignInRedirect></SignInRedirect>}
     </main>
   );
 }

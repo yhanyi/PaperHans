@@ -16,7 +16,7 @@ const LearnQuestions: React.FC<LearnQuestions> = ({ question, options, correctAn
   const handleOptionClick = (index: number) => {
     setSelectedOption(index);
     setShowResult(true);
-  };
+  }
 
   return (
     <div className={`p-4 rounded shadow-md w-96 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
@@ -43,7 +43,7 @@ const LearnQuestions: React.FC<LearnQuestions> = ({ question, options, correctAn
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 export default LearnQuestions;

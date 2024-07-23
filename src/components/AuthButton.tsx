@@ -7,14 +7,11 @@ import { signOut } from "firebase/auth";
 
 const AuthButton = () => {
   
-  const [user] = useAuthState(auth);
+  const [ user ] = useAuthState(auth);
   const router = useRouter();
 
   return (
-    <motion.div
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-    >
+    <main>
       {user ? (
         <div className="flex flex-col items-center w-32">
           <button
@@ -38,7 +35,7 @@ const AuthButton = () => {
           </h1>
         </div>
       )}
-    </motion.div>
+    </main>
   );
 };
 

@@ -1,10 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { AchievementsHelper } from "@/components/Achievements";
 
 export default function Home() {
+
+  const[ user ] = useAuthState(auth)
+  useEffect(() => {
+    const loadPage = async () => {
+      if (user) {
+        await AchievementsHelper(user, 'visitedAbout');
+      }
+    };
+    loadPage();
+  }, [user]);
+
   return (
     <main>
       <div className="flex flex-col items-center">
