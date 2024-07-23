@@ -46,13 +46,13 @@ const Profile = () => {
   return (
     <div className={`p-4 rounded shadow-md w-full max-w-[30rem] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
       <div className="flex items-center space-x-5">
+
         <button onClick={() => { if(user) setNormalState(!normalState); }}>
-          {user && user.photoURL ? (
-            <Image  src={user.photoURL} alt="Profile Photo" width={100} height={100} className="rounded-xl"/>
-          ) : (
-            <Image src="/images/defaultProfilePhoto.png" alt="Default Profile Photo" width={100} height={100} className="rounded-xl"/>
-          )}
+          <div className="relative w-24 h-24 overflow-hidden rounded-xl">
+            <Image src={user?.photoURL || "/images/defaultProfilePhoto.png"} alt="Profile Photo" fill style={{ objectFit: 'cover' }} className="rounded-xl"/>
+          </div>
         </button>
+        
         <div className="flex flex-col items-left">
           {normalState ? (
             <>
