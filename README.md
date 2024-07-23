@@ -4,6 +4,8 @@ This is the code repository for our Orbital 2024 project.
 
 Deployed at https://paperhans.vercel.app/
 
+Changelog available at https://shorturl.at/pKfKn
+
 **Team**:
 
 A0269924M Han Yu (@xhamyo)
@@ -20,7 +22,7 @@ Proposed Level of Achievement: Apollo 11
 
 3. Project Scope
 
-4. Milestone 1: Problem Motivation and Proposed Core Features
+4. Problem Motivation and Proposed Core Features
 
 **1. Setup** (Updated as of 25 June 2024)
 
@@ -79,7 +81,7 @@ It will leverage large language models to update users with real-time informatio
 
 A playground environment will also allow seasoned traders to hone their trading intuition by configuring machine-learning models with parameters that simulate automated paper trading. This provides all users, regardless of experience, a risk-free avenue to sharpen their knowledge and apply trading strategies to their decisions.
 
-**4. Milestone 1: Problem Motivation and Proposed Core Features**
+**4. Problem Motivation and Proposed Core Features**
 
 Problem Motivation: As of 2023, there is an estimated 420 million users (4.2% of the global population) exposed to cryptocurrency. With the recent resurgence of cryptocurrency in 2024, an influx of novice traders into the volatile market is expected.
 
