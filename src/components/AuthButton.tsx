@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 
 const AuthButton = () => {
+  
   const [user] = useAuthState(auth);
   const router = useRouter();
 

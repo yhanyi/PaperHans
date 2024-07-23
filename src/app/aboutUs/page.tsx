@@ -7,27 +7,12 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main>
-      {/* <motion.div
-        className="fixed top-8 items-center justify-center"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-      >
-        <div className="flex flex-row items-center border border-1">
-          <h1 className="text-2xl md:text-4xl font-bold">About Us</h1>
-          <Image
-            src="/images/AboutUs.png"
-            alt="AboutUs"
-            width={48}
-            height={48}
-          />
-        </div>
-      </motion.div> */}
       <div className="flex flex-col items-center">
         <motion.div
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: -15, opacity: 0.5 }}
           animate={{ y: 0, opacity: 1 }}
         >
-          <h1 className="text-2xl md:text-4xl font-bold">
+          <h1 className="text-4xl font-bold">
             About Team Han<sup>2</sup>
           </h1>
         </motion.div>

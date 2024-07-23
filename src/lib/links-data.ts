@@ -15,4 +15,8 @@ export const links = [
     name: "Learn",
     hash: "/learn",
   },
+  {
+    name: "Profile",
+    hash: "/profile",
+  },
 ];

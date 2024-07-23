@@ -12,7 +12,7 @@ interface CryptoData {
 }
 
 export default function Home() {
-  const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+  const [ cryptoData, setCryptoData ] = useState<CryptoData[]>([]);
   const supportedCryptos = [
     "bitcoin",
     "ethereum",
@@ -56,28 +56,14 @@ export default function Home() {
 
   return (
     <main className="flex flex-col gap-10">
-      {/* <motion.div
-        className="fixed top-8 right-8 flex items-center"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-      >
-        <h1 className="text-4xl font-bold">Prices</h1>
-        <Image
-          src="/images/BTCwCandles.png"
-          alt="BTC with Candles"
-          width={48}
-          height={48}
-        />
-      </motion.div> */}
       <div className="flex flex-col items-center space-y-5">
-        {/* <h1 className="text-4xl font-bold">Cryptocurrency Prices</h1> */}
         <motion.div
           className="flex items-center gap-2"
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: -15, opacity: 0.5 }}
           animate={{ y: 0, opacity: 1 }}
         >
-          <h1 className="text-2xl md:text-4xl font-bold">
-            Cryptocurrency Prices
+          <h1 className="text-4xl font-bold">
+            Prices
           </h1>
           <Image
             src="/images/BTCwCandles.png"

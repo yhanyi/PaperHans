@@ -13,7 +13,7 @@ export default function Home() {
       <div className="flex flex-col items-center space-y-5">
         <motion.div
           className="flex items-center gap-2"
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: -15, opacity: 0.5 }}
           animate={{ y: 0, opacity: 1 }}
         >
           <h1 className="text-4xl font-bold">Playground</h1>

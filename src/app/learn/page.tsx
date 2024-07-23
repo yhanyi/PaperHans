@@ -53,55 +53,35 @@ export default function Home() {
   }
 
   return (
-    // <main>
-    //   {/* <motion.div
-    //     className="fixed top-8 right-8 flex items-center"
-    //     initial={{ y: -100, opacity: 0 }}
-    //     animate={{ y: 0, opacity: 1 }}
-    //   >
-    //     <h1 className="text-4xl font-bold">Learn</h1>
-    //     <Image src="/images/Learn.png" alt="Learn" width={48} height={48}/>
-    //   </motion.div> */}
-    //   <div className="flex flex-col items-center space-y-5">
-    //     <motion.div
-    //       className="flex items-center gap-2"
-    //       initial={{ y: -100, opacity: 0 }}
-    //       animate={{ y: 0, opacity: 1 }}
-    //     >
-    //       <h1 className="text-2xl md:text-4xl font-bold">Learn</h1>
-    //       <Image src="/images/Learn.png" alt="Learn" width={48} height={48} />
-    //     </motion.div>
-    //   </div>
-    // </main>
     <main className="flex flex-col items-center space-y-5">
       <motion.div
         className="flex items-center gap-2"
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -15, opacity: 0.5 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <h1 className="text-2xl md:text-4xl font-bold">Learn</h1>
+        <h1 className="text-4xl font-bold">Learn</h1>
         <Image src="/images/Learn.png" alt="Learn" width={48} height={48} />
       </motion.div>
 
       <div className="flex space-x-4">
         <button
-          onClick={() => { pushLesson('bitcoin'); }}
+          onClick={() => { if(lesson?.tag != 'BTC') pushLesson('bitcoin'); }}
           className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > BTC </button>
         <button
-          onClick={() => { pushLesson('ethereum'); }}
+          onClick={() => { if(lesson?.tag != 'ETH') pushLesson('ethereum'); }}
           className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > ETH </button>
         <button
-          onClick={() => { pushLesson('ripple-xrp'); }}
+          onClick={() => { if(lesson?.tag != 'XRP') pushLesson('ripple-xrp'); }}
           className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > XRP </button>
         <button
-          onClick={() => { pushLesson('binance-coin'); }}
+          onClick={() => { if(lesson?.tag != 'BNB') pushLesson('binance-coin'); }}
           className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > BNB </button>
         <button
-          onClick={() => { pushLesson('cronos'); }}
+          onClick={() => { if(lesson?.tag != 'CRO') pushLesson('cronos'); }}
           className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         > CRO </button>
       </div>
