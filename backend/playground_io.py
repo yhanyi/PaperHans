@@ -21,6 +21,7 @@ class BacktestParameters(BaseModel):
     year: str
     benchmark: str
     cashAtRisk: str
+    userId: str
 
 # Caches backtesting status
 backtest_status = {"status":"idle"}
@@ -29,7 +30,7 @@ backtest_status = {"status":"idle"}
 async def process_data(bp: BacktestParameters):
     try:
         backtest_status["status"] = "running"
-        result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk))
+        result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk), bp.userId)
         backtest_status["status"] = "complete"
         cleanup_logs_files()
         return {"result": result}

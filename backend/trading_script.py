@@ -9,19 +9,37 @@ from modelzoo import finbert_estimate_sentiment
 from dotenv import load_dotenv
 from alpaca_trade_api.rest import REST
 import os
+import json
+from os import getenv
+from firebase_admin import credentials, initialize_app, firestore, auth
+from dotenv import load_dotenv
 
 load_dotenv()
 
-# Version 1 MLTrader
+firebase_config = json.loads(os.getenv("FIREBASE_JSON"))
+cred = credentials.Certificate(firebase_config)
+initialize_app(cred)
+db = firestore.client()
+
+def get_alpaca_keys(uid):
+    print("This is causing the error, part 2")
+    doc_ref = db.collection("alpacaKeys").document(uid)
+    doc = doc_ref.get()
+    if doc.exists():
+        data = doc.to_dict()
+        return data.get("apiKey"), data.get("apiSecret")
+    else:
+        raise ValueError("No Alpaca API keys found for user")
+
 class MLTrader(Strategy):
-    def initialize(self, symbol, cash_at_risk=0.5):
+    def initialize(self, symbol, cash_at_risk=0.5, alpaca_api_key=None, alpaca_api_secret=None):
         self.symbol = symbol
         self.sleeptime = "24H"
         self.last_trade = None
         self.cash_at_risk = cash_at_risk
         self.api = REST(base_url="https://paper-api.alpaca.markets",
-                        key_id=os.getenv("ALPACA_KEY"),
-                        secret_key=os.getenv("ALPACA_SECRET"))
+                        key_id=alpaca_api_key,
+                        secret_key=alpaca_api_secret)
 
     def position_sizing(self):
         cash = self.get_cash()
@@ -75,12 +93,14 @@ class MLTrader(Strategy):
                 self.submit_order(order)
                 self.last_trade = "sell"
 
-async def backtestStrategy(symbol, year, benchmark, cash_at_risk):
-  state = "Backtest Complete"
+async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
   try:
+    print("This is causing the error, part 1")
+    alpaca_api_key, alpaca_api_secret = get_alpaca_keys(user_id)
+    print(alpaca_api_key, alpaca_api_secret, user_id)
     ALPACA_CREDS = {
-      "API_KEY": os.getenv("ALPACA_KEY"),
-      "API_SECRET": os.getenv("ALPACA_SECRET"),
+      "API_KEY": alpaca_api_key,
+      "API_SECRET": alpaca_api_secret,
       "PAPER": True
     }
     broker = Alpaca(ALPACA_CREDS)
@@ -106,6 +126,7 @@ async def backtestStrategy(symbol, year, benchmark, cash_at_risk):
         show_tearsheet=False,
         show_plot=False
     )
+    state = "Backtest Complete"
   except:
      state = "Error encountered while backtesting."
   return state

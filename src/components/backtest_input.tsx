@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTearsheetContext } from "@/components/tearsheet-context";
+import { Tooltip, IconButton } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from "@/app/firebase/config";
 
 export default function BacktestInput() {
   const { setTearsheetDone } = useTearsheetContext();
@@ -10,6 +14,19 @@ export default function BacktestInput() {
   const [benchmark, setBenchmark] = useState<string>("");
   const [cashAtRisk, setCashAtRisk] = useState<string>("");
   const [response, setResponse] = useState<number | string>("");
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const auth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        setUserId(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleTradeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSymbol(event.target.value);
@@ -31,6 +48,10 @@ export default function BacktestInput() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!userId) {
+      toast.error("Please sign in to run a backtest.");
+      return;
+    }
     toast.info("Backtest is running, you will be notified when it's done.");
     try {
       const response = await fetch("http://127.0.0.1:8000/process", {
@@ -38,8 +59,9 @@ export default function BacktestInput() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ symbol, year, benchmark, cashAtRisk }),
+        body: JSON.stringify({ symbol, year, benchmark, cashAtRisk, userId }),
       });
+      console.log("This is working");
       const data = await response.json();
       if (data.error) {
         toast.error("An error occurred: " + data.error);
@@ -57,7 +79,17 @@ export default function BacktestInput() {
     <div className="flex flex-col gap-20">
       <form onSubmit={handleSubmit} className="flex flex-col gap-10">
         <div className="gap-5 flex flex-row items-center">
-          <p>Enter your trading symbol:</p>
+          <div className="gap-1 flex flex-row items-center justify-center">
+            <p>Enter your trading symbol:</p>
+            <Tooltip
+              className="dark:text-white text-black"
+              title="A unique identifier for the asset or stock you wish to backtest. For example, 'SPY' represents the SPDR S&P 500 ETF."
+            >
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
           <input
             type="text"
             value={symbol}
@@ -68,7 +100,17 @@ export default function BacktestInput() {
         </div>
 
         <div className="gap-5 flex flex-row items-center">
-          <p>Enter the year you want to backtest on:</p>
+          <div className="gap-1 flex flex-row items-center justify-center">
+            <p>Enter the year you want to backtest on:</p>
+            <Tooltip
+              className="dark:text-white text-black"
+              title="Select the specific year you want to analyze for your trading strategy. Backtesting allows you to simulate trades based on historical data from this chosen year."
+            >
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
           <input
             type="text"
             value={year}
@@ -78,8 +120,19 @@ export default function BacktestInput() {
           />
         </div>
 
-        <div className="gap-5 flex flex-row items-center">
-          <p>Enter your benchmark asset/stock:</p>
+        <div className="gap-5 flex flex-row items-center justify-center">
+          <div className="gap-1 flex flex-row items-center justify-center">
+            <p>Enter your benchmark asset/stock:</p>
+            <Tooltip
+              className="dark:text-white text-black"
+              title="Compare your trading strategy against a benchmark asset or stock. This could be another ETF or stock index like 'QQQ' (PowerShares QQQ Trust)"
+            >
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+
           <input
             type="text"
             value={benchmark}
@@ -90,7 +143,17 @@ export default function BacktestInput() {
         </div>
 
         <div className="gap-5 flex flex-row items-center">
-          <p>Enter your cash-at-risk proportion:</p>
+          <div className="gap-1 flex flex-row items-center justify-center">
+            <p>Enter your cash-at-risk proportion:</p>
+            <Tooltip
+              className="dark:text-white text-black"
+              title="Determines the portion of your total capital that you're willing to risk on each trade. The default value of 0.5 means risking 50% of your capital on each trade."
+            >
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
           <input
             type="text"
             value={cashAtRisk}
