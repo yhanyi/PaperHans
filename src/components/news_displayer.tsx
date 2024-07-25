@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   CircularProgress,
-  Snackbar,
-  Alert,
   Tooltip,
   IconButton,
   Modal,
@@ -25,7 +23,6 @@ const News = () => {
   const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>("publishedAt");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
 
   const fetchNews = async () => {
@@ -83,14 +80,6 @@ const News = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
-
   const handleErrorModalClose = () => {
     setErrorModalOpen(false);
   };
@@ -133,8 +122,11 @@ const News = () => {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold mb-4">
           Crypto News Scraper
-          <Tooltip title="A simple crypto new scraper, with general market sentiments predicted using a pretrained LLM model. Type something you want to search for, or sort the scraped news.">
-            <IconButton onClick={handleModalOpen}>
+          <Tooltip
+            className="dark:text-white text-black"
+            title="Collects cryptocurrency news from NewsAPI, with general market sentiments predicted using a pretrained LLM model (More LLM options soon!). Type something you want to search for, or sort the news!"
+          >
+            <IconButton>
               <InfoIcon />
             </IconButton>
           </Tooltip>
@@ -226,41 +218,6 @@ const News = () => {
           </li>
         ))}
       </ul>
-      <Modal open={modalOpen} onClose={handleModalClose}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 2,
-          }}
-        >
-          <p>
-            This page is scrapes the News API for cryptocurrency related news. A
-            popular LLM pretrained to provide financial market sentiments then
-            parses through the description of the piece of news, then provides a
-            predicted market sentiment.
-          </p>
-
-          <p>
-            Please note that this is not actual financial advice, and the
-            predictions made by Prosus may not accurately reflect the actual
-            market sentiment, and should only serve as a visual guide for you to
-            make your own decisions.
-          </p>
-          <button
-            onClick={handleModalClose}
-            className="close-modal-button p-2 bg-red-500 text-white rounded-md"
-          >
-            Exit
-          </button>
-        </Box>
-      </Modal>
     </div>
   );
 };

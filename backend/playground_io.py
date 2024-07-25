@@ -21,20 +21,23 @@ class BacktestParameters(BaseModel):
     year: str
     benchmark: str
     cashAtRisk: str
+    userId: str
 
 # Caches backtesting status
 backtest_status = {"status":"idle"}
 
 @app.post("/process")
 async def process_data(bp: BacktestParameters):
+    print(f"Received request with parameters: {bp}")  # Add this line
     try:
         backtest_status["status"] = "running"
-        result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk))
+        result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk), bp.userId)
         backtest_status["status"] = "complete"
         cleanup_logs_files()
         return {"result": result}
     except Exception as e:
         backtest_status["status"] = "error"
+        print(f"Error in process_data: {str(e)}")  # Add this line
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/status")
