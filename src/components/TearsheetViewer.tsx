@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useTearsheetContext } from "./tearsheet-context";
+import { useTearsheetContext } from "./TearsheetContext";
 
 export default function TearsheetViewer() {
   const {
@@ -44,7 +44,7 @@ export default function TearsheetViewer() {
       const interval = setInterval(checkStatus, 1000);
       return () => clearInterval(interval);
     }
-  }, [backtestStatus, setBacktestStatus, setTearsheetUrl]);
+  }, [backtestStatus, setBacktestStatus, setTearsheetUrl, setShowTearsheet]);
 
   const fetchTearsheet = async () => {
     try {
