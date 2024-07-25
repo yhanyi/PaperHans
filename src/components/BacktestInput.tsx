@@ -45,7 +45,7 @@ export default function BacktestInput() {
     toast.info("Backtest is running, you will be notified when it's done.");
     try {
       console.log("Sending request...");
-      const response = await fetch("http://127.0.0.1:8000/process", {
+      const response = await fetch("https://paperhans.vercel.app/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
