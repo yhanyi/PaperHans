@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTearsheetContext } from "@/components/tearsheet-context";
 import { Tooltip, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { app } from "@/app/firebase/config";
 
 export default function BacktestInput() {
@@ -14,19 +14,7 @@ export default function BacktestInput() {
   const [benchmark, setBenchmark] = useState<string>("");
   const [cashAtRisk, setCashAtRisk] = useState<string>("");
   const [response, setResponse] = useState<number | string>("");
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const auth = getAuth(app);
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-      } else {
-        setUserId(null);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  const [user, setUser] = useState<User | null>(null);
 
   const handleTradeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSymbol(event.target.value);
@@ -48,20 +36,35 @@ export default function BacktestInput() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!userId) {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+    if (!user) {
       toast.error("Please sign in to run a backtest.");
       return;
     }
     toast.info("Backtest is running, you will be notified when it's done.");
     try {
-      const response = await fetch("http://127.0.0.1:8000/process", {
+      console.log("Sending request...");
+      const response = await fetch("http://localhost:8000/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ symbol, year, benchmark, cashAtRisk, userId }),
+        body: JSON.stringify({
+          symbol,
+          year,
+          benchmark,
+          cashAtRisk,
+          userId: user.uid,
+        }),
       });
-      console.log("This is working");
+      console.log("Response received:", response.status);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`
+        );
+      }
       const data = await response.json();
       if (data.error) {
         toast.error("An error occurred: " + data.error);
