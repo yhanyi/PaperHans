@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useTearsheetContext } from "@/components/tearsheet-context";
+import { useTearsheetContext } from "@/components/TearsheetContext";
 import { Tooltip, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";

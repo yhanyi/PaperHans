@@ -4,8 +4,8 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
-import { useTheme } from "../../components/theme_context";
-import { FcGoogle } from 'react-icons/fc';
+import { useTheme } from "../../components/ThemeContext";
+import { FcGoogle } from "react-icons/fc";
 import ErrorPopUp from "../../components/ErrorPopUp";
 
 const SignIn = () => {
@@ -47,7 +47,6 @@ const SignIn = () => {
     }
   };
 
-  
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
@@ -63,9 +62,10 @@ const SignIn = () => {
     }
   };
   // Google branding guidelines https://developers.google.com/identity/branding-guidelines
-  const buttonStyle = theme === "dark" 
-    ? "bg-[#131314] text-[#E3E3E3] border-[#8E918F] border-2" 
-    : "bg-[#FFFFFF] text-[#1F1F1F] border-[#747775] border-2";
+  const buttonStyle =
+    theme === "dark"
+      ? "bg-[#131314] text-[#E3E3E3] border-[#8E918F] border-2"
+      : "bg-[#FFFFFF] text-[#1F1F1F] border-[#747775] border-2";
   const textStyle = "font-medium text-[14px] leading-[20px]";
 
   return (
@@ -103,9 +103,7 @@ const SignIn = () => {
         </button>
 
         <div className="h-4"></div>
-        <h1 className="text-sm font-medium">
-          Alternative sign-in options:
-        </h1>
+        <h1 className="text-sm font-medium">Alternative sign-in options:</h1>
         <button
           onClick={handleGoogleSignIn}
           className={`flex items-center justify-center w-full mt-4 rounded ${buttonStyle} ${textStyle} border hover:hover:translate-x-[2px] hover:translate-y-[2px] transition-all`}

@@ -4,11 +4,11 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, db } from "@/app/firebase/config";
 import { updateProfile } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { useTheme } from "../../components/theme_context";
+import { useTheme } from "../../components/ThemeContext";
 import { setDoc, doc, collection } from "firebase/firestore";
 import ErrorPopUp from "../../components/ErrorPopUp";
-import { toast } from 'react-toastify';
-import { FaStar } from 'react-icons/fa';
+import { toast } from "react-toastify";
+import { FaStar } from "react-icons/fa";
 
 const SignUp = () => {
   // Miscellaneous.
@@ -24,7 +24,8 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // Firebase.
-  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
   const achievementsRef = collection(db, "achievements");
 
   // For Error handling, throw ErrorPopUp.
@@ -78,7 +79,7 @@ const SignUp = () => {
           learnETH: false,
           learnXRP: false,
           learnBNB: false,
-          learnCRO: false
+          learnCRO: false,
         });
         toast.success("Achievement Unlocked! Create a PaperHans account.");
       } else {

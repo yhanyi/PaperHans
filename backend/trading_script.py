@@ -22,12 +22,14 @@ initialize_app(cred)
 db = firestore.client()
 
 def get_alpaca_keys(uid):
-    print("This is causing the error, part 2")
     doc_ref = db.collection("alpacaKeys").document(uid)
     doc = doc_ref.get()
-    if doc.exists():
+    if doc.exists:
         data = doc.to_dict()
-        return data.get("apiKey"), data.get("apiSecret")
+        if data and "apiKey" in data and "apiSecret" in data:
+            return data["apiKey"], data["apiSecret"]
+        else:
+            raise ValueError("Alpaca API keys are incomplete for this user")
     else:
         raise ValueError("No Alpaca API keys found for user")
 
@@ -95,7 +97,6 @@ class MLTrader(Strategy):
 
 async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
   try:
-    print("This is causing the error, part 1")
     alpaca_api_key, alpaca_api_secret = get_alpaca_keys(user_id)
     print(alpaca_api_key, alpaca_api_secret, user_id)
     ALPACA_CREDS = {
@@ -108,7 +109,9 @@ async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
                         broker=broker,
                         parameters={
                             "symbol": symbol.upper(),
-                            "cash_at_risk": cash_at_risk
+                            "cash_at_risk": cash_at_risk,
+                            "alpaca_api_key": alpaca_api_key,
+                            "alpaca_api_secret": alpaca_api_secret
                         })
   
 
@@ -121,7 +124,9 @@ async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
         benchmark_asset=benchmark.upper(),
         parameters={
             "symbol": symbol.upper(),
-            "cash_at_risk": cash_at_risk
+            "cash_at_risk": cash_at_risk,
+            "alpaca_api_key": alpaca_api_key,
+            "alpaca_api_secret": alpaca_api_secret
         },
         show_tearsheet=False,
         show_plot=False

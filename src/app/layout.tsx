@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "../components/header";
-import ThemeContextProvider from "@/components/theme_context";
-import ThemeSwitch from "@/components/theme_switch";
+import Header from "@/components/Header";
+import ThemeContextProvider from "@/components/ThemeContext";
+import ThemeSwitch from "@/components/ThemeSwitch";
 import ActiveSectionContextProvider, {
   ActiveSectionContext,
 } from "@/components/ActiveSectionContext";
-import { TearsheetProvider } from "@/components/tearsheet-context";
+import { TearsheetProvider } from "@/components/TearsheetContext";
 import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
