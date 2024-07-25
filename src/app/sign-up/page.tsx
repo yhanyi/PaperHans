@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "../../components/ThemeContext";
 import { setDoc, doc, collection } from "firebase/firestore";
 import ErrorPopUp from "../../components/ErrorPopUp";
-import { toast } from "react-toastify";
-import { FaStar } from "react-icons/fa";
 
 const SignUp = () => {
   // Miscellaneous.
@@ -48,7 +46,7 @@ const SignUp = () => {
         confirmPassword === ""
       ) {
         throw new Error("Please fill in all the required fields.");
-      } else if (email !== confirmEmail) {
+      } else if (email.toLowerCase() !== confirmEmail.toLowerCase()) {
         throw new Error("Emails do not match!");
       } else if (password !== confirmPassword) {
         throw new Error("Passwords do not match!");
@@ -74,6 +72,7 @@ const SignUp = () => {
           visitedPrices: false,
           visitedPlayground: false,
           visitedNews: false,
+          visitedLearn: false,
           visitedProfile: false,
           learnBTC: false,
           learnETH: false,
@@ -81,7 +80,6 @@ const SignUp = () => {
           learnBNB: false,
           learnCRO: false,
         });
-        toast.success("Achievement Unlocked! Create a PaperHans account.");
       } else {
         // 400 Bad Request likely caused by using the same email.
         throw new Error("Email is already in use!");
@@ -112,7 +110,7 @@ const SignUp = () => {
         <h1 className="text-2xl mb-5">Sign Up</h1>
         {error && <ErrorPopUp message={error} onClose={() => setError("")} />}
         <div className="flex flex-wrap mb-4">
-          <div className="w-full md:w-1/2 pr-2">
+          <div className="w-1/2 pr-2">
             <input
               type="text"
               placeholder="First Name"
@@ -125,7 +123,7 @@ const SignUp = () => {
               }`}
             />
           </div>
-          <div className="w-full md:w-1/2 pl-2">
+          <div className="w-1/2 pl-2">
             <input
               type="text"
               placeholder="Last Name"

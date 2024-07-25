@@ -6,7 +6,7 @@ import Profile from "../../components/Profile";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-import { AchievementsHelper } from "@/components/Achievements";
+import Achievements, { AchievementsHelper } from "@/components/Achievements";
 import SignInRedirect from "@/components/SignInRedirect";
 
 export default function Home() {
@@ -34,6 +34,8 @@ export default function Home() {
         </motion.div>
 
         <Profile ></Profile>
+
+        <Achievements></Achievements>
 
       </div>:<SignInRedirect></SignInRedirect>}
     </main>

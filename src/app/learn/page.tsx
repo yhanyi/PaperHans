@@ -7,7 +7,6 @@ import { doc, getDoc, collection, getDocs } from "firebase/firestore"
 import { db } from "@/app/firebase/config"
 import LearnQuestions from "../../components/LearnQuestions";
 import LearnInfo from "../../components/LearnInfo";
-import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { AchievementsHelper } from "@/components/Achievements";
@@ -15,8 +14,15 @@ import SignInRedirect from "@/components/SignInRedirect";
 
 export default function Home() {
 
-  const router = useRouter();
   const[ user ] = useAuthState(auth)
+  useEffect(() => {
+    const loadPage = async () => {
+      if (user) {
+        await AchievementsHelper(user, 'visitedLearn');
+      }
+    };
+    loadPage();
+  }, [user]);
 
   interface Lesson {
     name: string;

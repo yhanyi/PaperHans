@@ -48,19 +48,10 @@ const Profile = () => {
       }`}
     >
       <div className="flex items-center space-x-5">
-        <button
-          onClick={() => {
-            if (user) setNormalState(!normalState);
-          }}
-        >
-          <div className="relative w-24 h-24 overflow-hidden rounded-xl">
-            <Image
-              src={user?.photoURL || "/images/defaultProfilePhoto.png"}
-              alt="Profile Photo"
-              fill
-              style={{ objectFit: "cover" }}
-              className="rounded-xl"
-            />
+
+        <button onClick={() => { if(user) setNormalState(!normalState); }}>
+          <div className="relative w-24 h-24 overflow-hidden rounded-md">
+            <Image src={user?.photoURL || "/images/defaultProfilePhoto.png"} alt="Profile Photo" fill style={{ objectFit: 'cover' }}/>
           </div>
         </button>
 

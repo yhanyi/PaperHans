@@ -12,7 +12,6 @@ import SignInRedirect from "@/components/SignInRedirect";
 export default function Home() {
   const [user] = useAuthState(auth);
   useEffect(() => {
-    console.log("i fire once");
     const loadPage = async () => {
       if (user) {
         await AchievementsHelper(user, "visitedNews");
