@@ -26,7 +26,7 @@ class BacktestParameters(BaseModel):
 # Caches backtesting status
 backtest_status = {"status":"idle"}
 
-@app.post("/process")
+@app.post("/api/process")
 async def process_data(bp: BacktestParameters):
     print(f"Received request with parameters: {bp}")  # Add this line
     try:
@@ -40,7 +40,7 @@ async def process_data(bp: BacktestParameters):
         print(f"Error in process_data: {str(e)}")  # Add this line
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/status")
+@app.get("/api/status")
 async def get_status():
     return backtest_status
 
@@ -65,7 +65,7 @@ def cleanup_logs_files():
             new_file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
             os.rename(file_path, new_file_path)
         
-@app.get("/tearsheet")
+@app.get("/api/tearsheet")
 async def get_tearsheet():
     try:
         file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
@@ -75,9 +75,6 @@ async def get_tearsheet():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == '__main__':
-    import uvicorn
-    host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", 8000))
-    
-    uvicorn.run(app, host=host, port=port)
+if __name__ != '__main__':
+    import uvicorn    
+    uvicorn.run(app, host="0.0.0.0", port=8000)

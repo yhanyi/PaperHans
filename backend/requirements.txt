@@ -1,0 +1,16 @@
+torch
+transformers
+flask
+flask_cors
+requests
+dotenv
+os
+datetime
+fastapi
+lumibot
+pydantic
+lumibot
+math
+alpaca_trade_api
+json
+firebase_admin

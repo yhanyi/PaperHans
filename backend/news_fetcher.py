@@ -53,5 +53,5 @@ def get_news():
     news_with_sentiment = analyze_sentiment(processed_news)
     return jsonify(news_with_sentiment)
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+if __name__ != '__main__':
+    app.run(debug=True)
