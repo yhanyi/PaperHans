@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import ThemeContextProvider from "@/components/ThemeContext";
 import ThemeSwitch from "@/components/ThemeSwitch";
 import ActiveSectionContextProvider, {
@@ -30,7 +30,7 @@ export default function RootLayout({
         <ThemeContextProvider>
           <ActiveSectionContextProvider>
             <TearsheetProvider>
-              <Header />
+              {/* <Header /> */}
               <ToastContainer position="top-right" autoClose={5000} />
               {children}
               <ThemeSwitch />
