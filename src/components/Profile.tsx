@@ -74,7 +74,7 @@ const Profile = () => {
                 </Link>
               </div>
               <h3 className="text-lg font-md">
-                Your new one stop crypto webapp.
+                Your new one stop crypto web app.
               </h3>
             </>
           ) : (

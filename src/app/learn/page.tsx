@@ -24,6 +24,14 @@ export default function Home() {
     loadPage();
   }, [user]);
 
+  const LESSONS = [
+    {tag:"BTC", doc_id:"bitcoin"},
+    {tag:"ETH", doc_id:"ethereum"},
+    {tag:"XRP", doc_id:"ripple-xrp"},
+    {tag:"BNB", doc_id:"binance-coin"},
+    {tag:"CRO", doc_id:"cronos"}
+  ];
+
   interface Lesson {
     name: string;
     tag: string;
@@ -40,6 +48,7 @@ export default function Home() {
   const[questionsList, setQuestionsList] = useState<Question[]>([]);
 
   const pushLesson = async(id: string) => {
+
     const lessonRef = doc(db, "learn", id);
     const questionsRef = collection(db, "learn", id, "questions")
     try {
@@ -78,26 +87,15 @@ export default function Home() {
       </motion.div>
 
       <div className="flex space-x-4">
-        <button
-          onClick={() => { if(lesson?.tag != 'BTC') pushLesson('bitcoin'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
-        > BTC </button>
-        <button
-          onClick={() => { if(lesson?.tag != 'ETH') pushLesson('ethereum'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
-        > ETH </button>
-        <button
-          onClick={() => { if(lesson?.tag != 'XRP') pushLesson('ripple-xrp'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
-        > XRP </button>
-        <button
-          onClick={() => { if(lesson?.tag != 'BNB') pushLesson('binance-coin'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
-        > BNB </button>
-        <button
-          onClick={() => { if(lesson?.tag != 'CRO') pushLesson('cronos'); }}
-          className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
-        > CRO </button>
+        {
+          LESSONS.map(({ tag, doc_id }) => (
+            <button
+              key={tag}
+              onClick={() => { if(lesson?.tag != tag) pushLesson(doc_id); }}
+              className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
+            > {tag} </button>
+          ))
+        }
       </div>
 
       <LearnInfo

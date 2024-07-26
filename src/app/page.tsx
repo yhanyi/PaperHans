@@ -20,7 +20,7 @@ export default function Home() {
           PaperHans
         </h1>
         <p className="text-center max-w-xl my-6">
-          Your new one stop crypto webapp!
+          Your new one stop crypto web app!
         </p>
         <button
           onClick={() => {
