@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { AchievementsHelper } from "@/components/Achievements";
+import VoteSentiments from "@/components/VoteSentiments";
 
 export default function Home() {
   
@@ -37,9 +38,10 @@ export default function Home() {
     "crypto-com-chain",
   ];
 
+  const [ errorMessage, setErrorMessage ] = useState<string>();
+
   useEffect(() => {
     const fetchData = async () => {
-      const errorMessage = document.getElementById("errorMessage")!;
       const promises = supportedCryptos.map(async (cryptoId) => {
         try {
           const response = await fetch(
@@ -55,9 +57,7 @@ export default function Home() {
           return crypto;
         } catch (error) {
           console.error(`Error fetching data for ${cryptoId}:`, error);
-          errorMessage.innerHTML =
-            "Too many fetch requests, please try again later. (Sorry I'm broke I can't afford the subscription)";
-          return null;
+          setErrorMessage("Too many fetch requests, please try again later. (Sorry I'm broke I can't afford the subscription)")
         }
       });
 
@@ -90,32 +90,42 @@ export default function Home() {
           />
         </motion.div>
 
-        <div className={`p-2 rounded shadow-md max-w-[30rem] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
-          {cryptoData.map((crypto, index) => (<>
-            <div className={`p-2 flex justify-center rounded shadow-md max-w-[30rem] ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`}>
-              <div className="flex items-center space-x-5">
-                <div key={index} className="relative w-24 h-24 overflow-hidden rounded-md">
-                  <Image src={crypto.logoUrl} alt={`${crypto.name} logo`} fill style={{ objectFit: 'cover'}}/>
-                </div>
-                <div className="flex flex-col items-left">
-                  <h1 className="text-2xl font-bold">
-                    {crypto.name}
-                  </h1>
-                  <h2 className="text-lg">
-                    Price: <span className="font-bold">{crypto.price.toFixed(2)} SGD</span>
-                  </h2>
-                  {crypto.percentChange > 0 ? (
-                      <h3 className="text-lg">24h Change: <span className="text-green-600 font-bold">{crypto.percentChange.toFixed(2)}%</span></h3>
-                    ):(
-                      <h3 className="text-lg">24h Change: <span className="text-red-600 font-bold">{crypto.percentChange.toFixed(2)}%</span></h3>
+        <VoteSentiments></VoteSentiments>
+
+        {cryptoData[0]?(
+          <div className={`p-2 rounded shadow-md w-full max-w-[21rem] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+            {cryptoData.map((crypto, index) => (<>
+              <div className={`p-2 flex justify-center rounded shadow-md max-w-[30rem] ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`}>
+                <div className="flex items-center space-x-5">
+                  <div key={index} className="relative w-24 h-24 overflow-hidden rounded-md">
+                    <Image src={crypto.logoUrl} alt={`${crypto.name} logo`} fill style={{ objectFit: 'cover'}}/>
+                  </div>
+                  <div className="flex flex-col items-left">
+                    <h1 className="text-2xl font-bold">
+                      {crypto.name}
+                    </h1>
+                    <h2 className="text-lg">
+                      Price: <span className="font-bold">{crypto.price.toFixed(2)} SGD</span>
+                    </h2>
+                    {crypto.percentChange > 0 ? (
+                        <h3 className="text-lg">24h Change: <span className="text-green-600 font-bold">{crypto.percentChange.toFixed(2)}%</span></h3>
+                      ):(
+                        <h3 className="text-lg">24h Change: <span className="text-red-600 font-bold">{crypto.percentChange.toFixed(2)}%</span></h3>
                     )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="h-2"></div>
-          </>))}
-          <h3 className="text-lg font-md" id="errorMessage"></h3>
-        </div>
+              <div className="h-2"></div>
+            </>))}
+          </div>
+        ):(
+          <div className={`p-2 rounded shadow-md w-full max-w-[21rem] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+            {errorMessage?
+              <h1 className="text-sm font-md text-red-600">{errorMessage}</h1>:
+              <h1 className="text-sm font-md text-center">Loading Prices</h1>
+            }
+          </div>
+        )}
       </div>
 
       <div className="fixed bottom-8 left-0 right-0 flex justify-center">

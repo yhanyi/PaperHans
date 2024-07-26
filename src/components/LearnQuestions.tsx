@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useTheme } from "./ThemeContext";
 
@@ -7,14 +8,11 @@ interface LearnQuestions {
   correctAnswerIndex: number;
 }
 
-const LearnQuestions: React.FC<LearnQuestions> = ({
-  question,
-  options,
-  correctAnswerIndex,
-}) => {
+const LearnQuestions: React.FC<LearnQuestions> = ({ question, options, correctAnswerIndex }) => {
+
   const { theme } = useTheme();
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false);
+  const [ selectedOption, setSelectedOption ] = useState<number | null>(null);
+  const [ showResult, setShowResult ] = useState(false);
 
   const handleOptionClick = (index: number) => {
     setSelectedOption(index);
@@ -22,12 +20,8 @@ const LearnQuestions: React.FC<LearnQuestions> = ({
   };
 
   return (
-    <div
-      className={`p-4 rounded shadow-md w-96 ${
-        theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-      }`}
-    >
-      <h2 className="text-xl font-bold mb-4">{question}</h2>
+    <div className={`p-4 rounded shadow-md w-96 ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"}`}>
+      <h1 className="text-xl font-bold mb-4">{question}</h1>
       <div className="flex flex-col space-y-2">
         {options.map((option, index) => (
           <button
