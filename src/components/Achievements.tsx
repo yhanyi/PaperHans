@@ -118,7 +118,7 @@ const Achievements = () => {
       {ACHIEVEMENTS.map((achievement) => (
       <>
         <div className="h-2"></div>
-        <div className={`p-4 rounded shadow-md w-full max-w-[30rem] ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'}`}>
+        <div className={`p-4 rounded shadow-md w-full max-w-[30rem] ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`}>
           <div className="flex items-center space-x-5">
             {achievementsData ? (
               achievementsData[achievement] ? (
@@ -129,13 +129,11 @@ const Achievements = () => {
                 
                 <div className="flex flex-col items-left">
                       <h1 className="text-2xl font-bold">
-                      {ACHIEVEMENTS_TITLE[achievement]}
+                        {ACHIEVEMENTS_TITLE[achievement]}
                       </h1>
-                      <div className="flex flex-row items-center space-x-2">
-                        <h2 className="text-lg font-md">
-                          {ACHIEVEMENTS_DESCRIPTION[achievement]}
-                        </h2>
-                      </div>
+                      <h2 className="text-lg font-md">
+                        {ACHIEVEMENTS_DESCRIPTION[achievement]}
+                      </h2>
                       <h3 className="text-md font-md text-green-600">
                         COMPLETED
                       </h3>
@@ -154,11 +152,9 @@ const Achievements = () => {
                       <h1 className="text-2xl font-bold">
                         {ACHIEVEMENTS_TITLE[achievement]}
                       </h1>
-                      <div className="flex flex-row items-center space-x-2">
-                        <h2 className="text-lg font-md">
-                          {ACHIEVEMENTS_DESCRIPTION[achievement]}
-                        </h2>
-                      </div>
+                      <h2 className="text-lg font-md">
+                        {ACHIEVEMENTS_DESCRIPTION[achievement]}
+                      </h2>
                       <h3 className="text-md font-md text-red-600">
                         ACHIEVEMENT LOCKED
                       </h3>

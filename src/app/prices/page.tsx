@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useTheme } from "@/components/ThemeContext";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -8,7 +9,8 @@ import { auth } from "@/app/firebase/config";
 import { AchievementsHelper } from "@/components/Achievements";
 
 export default function Home() {
-
+  
+  const { theme } = useTheme();
   const[ user ] = useAuthState(auth)
   useEffect(() => {
     const loadPage = async () => {
@@ -54,7 +56,7 @@ export default function Home() {
         } catch (error) {
           console.error(`Error fetching data for ${cryptoId}:`, error);
           errorMessage.innerHTML =
-            "Error Fetching (Too Many Requests). Please try again later.";
+            "Too many fetch requests, please try again later. (Sorry I'm broke I can't afford the subscription)";
           return null;
         }
       });
@@ -71,6 +73,7 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-10">
       <div className="flex flex-col items-center space-y-5">
+
         <motion.div
           className="flex items-center gap-2"
           initial={{ y: -15, opacity: 0.5 }}
@@ -86,23 +89,35 @@ export default function Home() {
             height={48}
           />
         </motion.div>
-        {cryptoData.map((crypto, index) => (
-          <div key={index} className="flex items-center space-x-4">
-            <Image
-              src={crypto.logoUrl}
-              alt={`${crypto.name} logo`}
-              width={60}
-              height={60}
-            />
-            <div>
-              <h2 className="text-xl font-bold">{crypto.name}</h2>
-              <p>Price: {crypto.price.toFixed(2)} SGD</p>
-              <p>24h Change: {crypto.percentChange.toFixed(2)}%</p>
+
+        <div className={`p-2 rounded shadow-md max-w-[30rem] ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+          {cryptoData.map((crypto, index) => (<>
+            <div className={`p-2 flex justify-center rounded shadow-md max-w-[30rem] ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`}>
+              <div className="flex items-center space-x-5">
+                <div key={index} className="relative w-24 h-24 overflow-hidden rounded-md">
+                  <Image src={crypto.logoUrl} alt={`${crypto.name} logo`} fill style={{ objectFit: 'cover'}}/>
+                </div>
+                <div className="flex flex-col items-left">
+                  <h1 className="text-2xl font-bold">
+                    {crypto.name}
+                  </h1>
+                  <h2 className="text-lg">
+                    Price: <span className="font-bold">{crypto.price.toFixed(2)} SGD</span>
+                  </h2>
+                  {crypto.percentChange > 0 ? (
+                      <h3 className="text-lg">24h Change: <span className="text-green-600 font-bold">{crypto.percentChange.toFixed(2)}%</span></h3>
+                    ):(
+                      <h3 className="text-lg">24h Change: <span className="text-red-600 font-bold">{crypto.percentChange.toFixed(2)}%</span></h3>
+                    )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-        <h3 className="text-xl font-bold" id="errorMessage"></h3>
+            <div className="h-2"></div>
+          </>))}
+          <h3 className="text-lg font-md" id="errorMessage"></h3>
+        </div>
       </div>
+
       <div className="fixed bottom-8 left-0 right-0 flex justify-center">
         <div className="bg-gray-200 p-4 rounded-lg shadow-md dark:bg-gray-950 dark:border-black/40 dark:bg-opacity/75">
           <h1 className="text-sm font-bold text-center">
@@ -110,6 +125,7 @@ export default function Home() {
           </h1>
         </div>
       </div>
+
       <div className="h-16"></div>
     </main>
   );

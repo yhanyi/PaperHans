@@ -92,7 +92,7 @@ export default function Home() {
             <button
               key={tag}
               onClick={() => { if(lesson?.tag != tag) pushLesson(doc_id); }}
-              className="bg-indigo-600 text-white text-base md:text-lg font-medium px-6 py-2 shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
+              className="bg-indigo-600 text-white text-base text-lg font-medium px-6 py-2 rounded shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
             > {tag} </button>
           ))
         }
