@@ -1,6 +1,6 @@
 # Start Flask server
 echo "Starting Flask server."
-cd backend
+cd api
 python3.11 news_fetcher.py &
 
 # Start Uvicorn server
