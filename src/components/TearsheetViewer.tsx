@@ -26,7 +26,7 @@ export default function TearsheetViewer() {
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        const response = await fetch(`https://paperhans.vercel.app/status`);
+        const response = await fetch(`https://paperhans.vercel.app/api/status`);
         const data = await response.json();
         setBacktestStatus(data.status);
 
@@ -49,7 +49,7 @@ export default function TearsheetViewer() {
   const fetchTearsheet = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/tearsheet?timestamp=${new Date().getTime()}`
+        `https://paperhans.vercel.app/api/tearsheet?timestamp=${new Date().getTime()}`
       );
       if (!response.ok) {
         toast.error("Error fetching tearsheet: " + response.statusText);
@@ -71,7 +71,7 @@ export default function TearsheetViewer() {
   const downloadTearsheet = async () => {
     try {
       const response = await fetch(
-        `https://paperhans.vercel.app/tearsheet?timestamp=${new Date().getTime()}`
+        `https://paperhans.vercel.app/api/tearsheet?timestamp=${new Date().getTime()}`
       );
       if (!response.ok) {
         toast.error("Error downloading tearsheet: " + response.statusText);
