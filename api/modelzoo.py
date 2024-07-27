@@ -1,13 +1,11 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
 model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert").to(device)
 labels = ["positive", "negative", "neutral"]
-
-sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert")
 
 def finbert_estimate_sentiment(news):
     if not news:
@@ -23,8 +21,8 @@ def finbert_estimate_sentiment(news):
 def analyze_sentiment(news):
     for item in news:
         try:
-            sentiment = sentiment_pipeline(item['info'])
-            item['sentiment'] = sentiment[0]['label'].capitalize()
+            probability, sentiment = finbert_estimate_sentiment(item['info'])
+            item['sentiment'] = sentiment.capitalize()
         except:
             item['sentiment'] = 'Error'
     return news

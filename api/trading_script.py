@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from alpaca_trade_api.rest import REST
 from os import getenv
 import json
-from firebase_admin import credentials, initialize_app, firestore, auth
+from firebase_admin import credentials, initialize_app, firestore
 from dotenv import load_dotenv
 
 load_dotenv()

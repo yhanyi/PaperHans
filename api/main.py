@@ -73,7 +73,7 @@ async def process_data(bp: BacktestParameters):
         return {"result": result}
     except Exception as e:
         backtest_status["status"] = "error"
-        print(f"Error in process_data: {str(e)}")  # Add this line
+        print(f"Error in process_data: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/status")
