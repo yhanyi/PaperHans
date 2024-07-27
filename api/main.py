@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import trading_script as trade
 import uvicorn
-from starlette.middleware.wsgi import WSGIMiddleware
+from multiprocessing import Process
 
 load_dotenv()
 
@@ -132,8 +132,19 @@ async def get_tearsheet():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Combine FastAPI with Flask using WSGI middleware
-fastapi_app.mount("/", WSGIMiddleware(flask_app))
+# Start Flask and FastAPI in parallel
+def start_flask():
+    flask_app.run(host="0.0.0.0", port=5000)
+
+def start_fastapi():
+    uvicorn.run(fastapi_app, host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
-    uvicorn.run(fastapi_app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+    flask_process = Process(target=start_flask)
+    fastapi_process = Process(target=start_fastapi)
+
+    flask_process.start()
+    fastapi_process.start()
+
+    flask_process.join()
+    fastapi_process.join()
