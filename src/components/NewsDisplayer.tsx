@@ -28,7 +28,7 @@ const News = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://paperhans.vercel.app/api/news");
+      const response = await axios.get("https://paperhans-0abb78dd202e.herokuapp.com/api/news");
       console.log("News data:", response.data);
       if (response.status === 429) {
         setError("Rate limit exceeded. Please try again later.");
