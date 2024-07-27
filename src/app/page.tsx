@@ -23,6 +23,7 @@ export default function Home() {
           Your new one stop crypto web app!
         </p>
         <button
+          data-testid='about-us-button'
           onClick={() => {router.push("/aboutUs");}}
           className="bg-indigo-600 text-white text-base text-lg font-medium px-6 py-2 rounded shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
         >

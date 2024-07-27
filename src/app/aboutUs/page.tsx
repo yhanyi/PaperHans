@@ -110,13 +110,13 @@ export default function Home() {
         <div className={`p-4 rounded shadow-md max-w-lg w-full ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"}`}>
           <h1 className="text-xl font-bold mb-4 text-center">Project Video</h1>
           <h2 className="flex justify-center">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowFullScreen style={{ width: '464px', height: '261px', border: 'none' }}/>
+            <iframe data-testid='project-video' src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowFullScreen style={{ width: '464px', height: '261px', border: 'none' }}/>
           </h2>
         </div>
 
         <div className="h-8"></div>
 
-        <button onClick={() => router.push("/tutorial")} className="bg-indigo-600 text-white text-base text-lg font-medium w-[10rem] py-2 rounded shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+        <button data-testid='tutorial-button' onClick={() => router.push("/tutorial")} className="bg-indigo-600 text-white text-base text-lg font-medium w-[10rem] py-2 rounded shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
           Tutorial
         </button>
 
