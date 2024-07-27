@@ -29,7 +29,7 @@ def fetch_crypto_news(query='cryptocurrency'):
     startdate = today - datetime.timedelta(days=30)
     url = f'https://newsapi.org/v2/everything?q={query}&from={startdate.strftime("%Y-%m-%d")}&sortBy=publishedAt&apiKey={NEWS_API_KEY}&language=en'
     response = requests.get(url)
-    if response.status_code == 429:
+    if response.status_code == 429: 
         return None, response.status_code
     data = response.json()
     return data['articles'], response.status_code
@@ -111,5 +111,5 @@ async def get_tearsheet():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == '__main__':
+#     uvicorn.run(app, host="0.0.0.0", port=8000)

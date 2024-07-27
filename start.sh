@@ -1,9 +1,5 @@
-# Start Flask server
-echo "Starting Flask server."
-cd api
-# python3.11 news_fetcher.py &
-
 # Start Uvicorn server
+cd api
 echo "Starting Uvicorn server."
 uvicorn main:app --reload &
 

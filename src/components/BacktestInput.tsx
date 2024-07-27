@@ -47,7 +47,7 @@ export default function BacktestInput() {
     );
     try {
       console.log("Sending request...");
-      const response = await fetch("http://0.0.0.0:8000/api/process", {
+      const response = await fetch("/api/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
