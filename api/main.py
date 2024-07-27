@@ -76,7 +76,6 @@ backtest_status = {"status": "idle"}
 
 @app.post("/api/process")
 async def process_data(bp: BacktestParameters):
-    print(f"Received request with parameters: {bp}")  # Add this line
     try:
         backtest_status["status"] = "running"
         result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk), bp.userId)

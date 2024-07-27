@@ -69,7 +69,9 @@ export default function BacktestInput() {
       if (data.error) {
         toast.error("An error occurred: " + data.error);
       } else {
-        toast.success("Backtest complete!");
+        toast.success(
+          "Backtest complete! Check the playground page again to view the tearsheet."
+        );
         setTearsheetDone(true);
       }
     } catch (error: any) {
