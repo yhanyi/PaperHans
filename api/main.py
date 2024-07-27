@@ -2,13 +2,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from transformers import pipeline
 import requests
 from dotenv import load_dotenv
 import os
 import datetime
 import trading_script as trade
 import uvicorn
+from modelzoo import analyze_sentiment
 
 load_dotenv()
 
@@ -23,8 +23,6 @@ app.add_middleware(
 )
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
-
-sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert")
 
 def fetch_crypto_news(query='cryptocurrency'):
     today = datetime.date.today()
@@ -45,15 +43,6 @@ def process_news(news):
             "url": item.get("url", "No URL")
         })
     return processed_news
-
-def analyze_sentiment(news):
-    for item in news:
-        try:
-            sentiment = sentiment_pipeline(item['info'])
-            item['sentiment'] = sentiment[0]['label'].capitalize()
-        except:
-            item['sentiment'] = 'Error'
-    return news
 
 @app.get("/api/news")
 def get_news():
