@@ -22,16 +22,29 @@ initialize_app(cred)
 db = firestore.client()
 
 def get_alpaca_keys(uid):
-    doc_ref = db.collection("alpacaKeys").document(uid)
-    doc = doc_ref.get()
-    if doc.exists:
-        data = doc.to_dict()
-        if data and "apiKey" in data and "apiSecret" in data:
-            return data["apiKey"], data["apiSecret"]
+    try:
+        doc_ref = db.collection("alpacaKeys").document(uid)
+        print("Document reference created:", doc_ref)
+        
+        doc = doc_ref.get()
+        print("Document snapshot retrieved:", doc)
+        
+        if doc.exists:
+            data = doc.to_dict()
+            print("Document data:", data)
+            
+            if data and "apiKey" in data and "apiSecret" in data:
+                print("API Key:", data["apiKey"])
+                print("API Secret:", data["apiSecret"])
+                return data["apiKey"], data["apiSecret"]
+            else:
+                raise ValueError("Alpaca API keys are incomplete for this user")
         else:
-            raise ValueError("Alpaca API keys are incomplete for this user")
-    else:
-        raise ValueError("No Alpaca API keys found for user")
+            raise ValueError("No Alpaca API keys found for user")
+    
+    except Exception as e:
+        print("An error occurred:", str(e))
+        raise
 
 class MLTrader(Strategy):
     def initialize(self, symbol, cash_at_risk=0.5, alpaca_api_key=None, alpaca_api_secret=None):
