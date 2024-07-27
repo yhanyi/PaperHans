@@ -24,18 +24,10 @@ db = firestore.client()
 def get_alpaca_keys(uid):
     try:
         doc_ref = db.collection("alpacaKeys").document(uid)
-        print("Document reference created:", doc_ref)
-        
         doc = doc_ref.get()
-        print("Document snapshot retrieved:", doc)
-        
         if doc.exists:
             data = doc.to_dict()
-            print("Document data:", data)
-            
             if data and "apiKey" in data and "apiSecret" in data:
-                print("API Key:", data["apiKey"])
-                print("API Secret:", data["apiSecret"])
                 return data["apiKey"], data["apiSecret"]
             else:
                 raise ValueError("Alpaca API keys are incomplete for this user")
@@ -43,7 +35,6 @@ def get_alpaca_keys(uid):
             raise ValueError("No Alpaca API keys found for user")
     
     except Exception as e:
-        print("An error occurred:", str(e))
         raise
 
 class MLTrader(Strategy):
@@ -111,7 +102,6 @@ class MLTrader(Strategy):
 async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
   try:
     alpaca_api_key, alpaca_api_secret = get_alpaca_keys(user_id)
-    print(alpaca_api_key, alpaca_api_secret, user_id)
     ALPACA_CREDS = {
       "API_KEY": alpaca_api_key,
       "API_SECRET": alpaca_api_secret,
@@ -144,7 +134,7 @@ async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
         show_tearsheet=False,
         show_plot=False
     )
-    state = "Backtest Complete"
+    state = "Backtest complete! Check the playground page again to view the tearsheet."
   except:
      state = "Error encountered while backtesting."
   return state
