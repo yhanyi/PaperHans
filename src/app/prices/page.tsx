@@ -13,6 +13,8 @@ export default function Home() {
   
   const { theme } = useTheme();
   const[ user ] = useAuthState(auth)
+  const [ errorMessage, setErrorMessage ] = useState<string>();
+  
   useEffect(() => {
     const loadPage = async () => {
       if (user) {
@@ -37,8 +39,6 @@ export default function Home() {
     "binancecoin",
     "crypto-com-chain",
   ];
-
-  const [ errorMessage, setErrorMessage ] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {

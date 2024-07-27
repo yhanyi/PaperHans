@@ -94,8 +94,8 @@ const SignUp = () => {
       setPassword("");
       setConfirmPassword("");
 
-      // Redirect user to Home after successful sign-up
-      router.push("/");
+      // Redirect user to Tutorial after successful sign-up
+      router.push("/tutorial");
     } catch (e: any) {
       console.error(e);
       setError(e.message);

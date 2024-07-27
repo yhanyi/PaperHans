@@ -184,7 +184,7 @@ export const AchievementsHelper = async (user : User, achievement : string) => {
       const achievementsDoc = await getDoc(achievementsDocRef);
 
       if (!achievementsDoc.exists()) {
-        await setDoc(doc(db, "achievements", user.uid), {
+        await setDoc(achievementsDocRef, {
           nAchievements: 1,
           createdAccount: true,
           tryToggleTheme: false,

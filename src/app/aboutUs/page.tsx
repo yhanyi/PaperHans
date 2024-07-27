@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { useTheme } from "../../components/ThemeContext";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
@@ -11,6 +12,7 @@ import LearnInfo from "@/components/LearnInfo";
 
 export default function Home() {
 
+  const router = useRouter();
   const { theme } = useTheme();
   const [ user ] = useAuthState(auth)
   useEffect(() => {
@@ -52,7 +54,7 @@ export default function Home() {
         <div className="h-4"></div>
 
         <div className={`p-2 rounded shadow-md ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"} max-w-[20rem]`}>
-                <a href="https://docs.google.com/document/d/1YYhPiGj3DJEe8xhyofTemyj72_vM5KJCrqd1i6EiiDM/edit#heading=h.xen903qbfnbs" target="_blank" rel="noopener noreferrer">
+          <a href="https://docs.google.com/document/d/1YYhPiGj3DJEe8xhyofTemyj72_vM5KJCrqd1i6EiiDM/edit#heading=h.xen903qbfnbs" target="_blank" rel="noopener noreferrer">
             <h1 className="text-md font-lg text-center hover:underline">
               PaperHans Project README 🔗
             </h1>
@@ -62,7 +64,7 @@ export default function Home() {
         <div className="h-4"></div>
 
         <div className={`p-2 rounded shadow-md ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"} max-w-[20rem]`}>
-                <a href="https://docs.google.com/spreadsheets/d/1rY75tFdyqRqVAe7jtrbcQ3uYtsDIPZN3vAa8r9LYMJA/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">
+          <a href="https://docs.google.com/spreadsheets/d/1rY75tFdyqRqVAe7jtrbcQ3uYtsDIPZN3vAa8r9LYMJA/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">
             <h1 className="text-md font-lg text-center hover:underline">
               PaperHans Project CHANGELOG 🔗
             </h1>
@@ -113,6 +115,12 @@ export default function Home() {
         </div>
 
         <div className="h-8"></div>
+
+        <button onClick={() => router.push("/tutorial")} className="bg-indigo-600 text-white text-base text-lg font-medium w-[10rem] py-2 rounded shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+          Tutorial
+        </button>
+
+        <div className="h-4"></div>
         
       </div>
     </main>

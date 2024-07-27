@@ -14,7 +14,7 @@ import SignInRedirect from "@/components/SignInRedirect";
 
 export default function Home() {
 
-  const[ user ] = useAuthState(auth)
+  const [ user ] = useAuthState(auth)
   useEffect(() => {
     const loadPage = async () => {
       if (user) {
@@ -48,7 +48,6 @@ export default function Home() {
   const[questionsList, setQuestionsList] = useState<Question[]>([]);
 
   const pushLesson = async(id: string) => {
-
     const lessonRef = doc(db, "learn", id);
     const questionsRef = collection(db, "learn", id, "questions")
     try {
@@ -76,7 +75,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center space-y-5">{user?<>
+    <main className="flex flex-col items-center space-y-2">{user?<>
       <motion.div
         className="flex items-center gap-2"
         initial={{ y: -15, opacity: 0.5 }}
@@ -98,27 +97,22 @@ export default function Home() {
         }
       </div>
 
-      <LearnInfo
-          topic={lesson?.name || "Learn about your favourite Cryptocurrency!"}
-          content={lesson?.information || "Click on a cryptocurrency of your choice to start your learning! After each lesson, your knowledge will be assessed by a set of trivia questions."}
+      <LearnInfo topic={lesson?.name || "Learn about your favourite Cryptocurrency!"}
+        content={lesson?.information || "Click on a cryptocurrency of your choice to start your learning! After each lesson, your knowledge will be assessed by a set of trivia questions."}
       />
-      
-      <div className="h-4"></div>
-      {lesson && (
-        <LearnInfo
-          topic="Trivia Questions"
-          content="Good job! You have successfully completed the lesson! Attempt the trivia questions below to assess your learning!"
-        />
-      )}
-      {questionsList.map(question => (
-        <LearnQuestions
-          key={question.qn}
-          question={question.qn}
-          options={question.options}
-          correctAnswerIndex={question.answer}/>
-      ))}
 
-      <div className="h-8"></div></>:<SignInRedirect></SignInRedirect>}
+      <div className="h-2"></div>
+      {lesson && (
+        <>
+          <LearnInfo topic="Trivia Questions"
+            content="Good job! You have successfully completed the lesson! Attempt the trivia questions below to assess your learning!"
+          />
+
+          <LearnQuestions lesson={lesson} questionsList={questionsList}></LearnQuestions>
+        </>
+      )}
+
+      <div className="h-36"></div></>:<SignInRedirect></SignInRedirect>}
 
     </main>
   );
