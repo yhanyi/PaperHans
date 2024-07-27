@@ -24,6 +24,14 @@
       "dest": "/backend/playground_io.py"
     },
     {
+      "src": "/api/status",
+      "dest": "/backend/playground_io.py"
+    },
+    {
+      "src": "/api/tearsheet",
+      "dest": "/backend/playground_io.py"
+    },
+    {
       "src": "/(.*)",
       "dest": "src/$1"
     }
