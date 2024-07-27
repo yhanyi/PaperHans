@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTearsheetContext } from "@/components/TearsheetContext";
 import { Tooltip, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { app } from "@/app/firebase/config";
 
 export default function BacktestInput() {
@@ -14,7 +14,6 @@ export default function BacktestInput() {
   const [benchmark, setBenchmark] = useState<string>("");
   const [cashAtRisk, setCashAtRisk] = useState<string>("");
   const [response, setResponse] = useState<number | string>("");
-  const [user, setUser] = useState<User | null>(null);
 
   const handleTradeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSymbol(event.target.value);
