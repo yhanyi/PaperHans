@@ -1,23 +1,26 @@
-from flask import Flask, jsonify, make_response
-from flask_cors import CORS
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from transformers import pipeline
 import requests
 from dotenv import load_dotenv
 import os
 import datetime
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 import trading_script as trade
 import uvicorn
-from multiprocessing import Process
 
 load_dotenv()
 
-# Flask app setup
-flask_app = Flask(__name__)
-CORS(flask_app)
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 
@@ -25,8 +28,8 @@ sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert")
 
 def fetch_crypto_news(query='cryptocurrency'):
     today = datetime.date.today()
-    startdate = today - datetime.timedelta(days=60)
-    url = f'https://newsapi.org/v2/everything?q={query}&from={startdate.strftime()}&sortBy=publishedAt&apiKey={NEWS_API_KEY}&language=en'
+    startdate = today - datetime.timedelta(days=30)
+    url = f'https://newsapi.org/v2/everything?q={query}&from={startdate.strftime("%Y-%m-%d")}&sortBy=publishedAt&apiKey={NEWS_API_KEY}&language=en'
     response = requests.get(url)
     if response.status_code == 429:
         return None, response.status_code
@@ -52,26 +55,14 @@ def analyze_sentiment(news):
             item['sentiment'] = 'Error'
     return news
 
-@flask_app.route('/api/news', methods=['GET'])
+@app.get("/api/news")
 def get_news():
     news, status_code = fetch_crypto_news()
     if status_code == 429:
-        return make_response(jsonify({"error": "Rate limit exceeded. Please try again later."}), 429)
+        return JSONResponse(content={"error": "Rate limit exceeded. Please try again later."}, status_code=429)
     processed_news = process_news(news)
     news_with_sentiment = analyze_sentiment(processed_news)
-    return jsonify(news_with_sentiment)
-
-# FastAPI app setup
-fastapi_app = FastAPI()
-
-# Allow CORS for all origins
-fastapi_app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    return JSONResponse(content=news_with_sentiment)
 
 class BacktestParameters(BaseModel):
     symbol: str
@@ -83,9 +74,8 @@ class BacktestParameters(BaseModel):
 # Caches backtesting status
 backtest_status = {"status": "idle"}
 
-@fastapi_app.post("/api/process")
+@app.post("/api/process")
 async def process_data(bp: BacktestParameters):
-    print(f"Received request with parameters: {bp}")  # Add this line
     try:
         backtest_status["status"] = "running"
         result = await trade.backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk), bp.userId)
@@ -97,7 +87,7 @@ async def process_data(bp: BacktestParameters):
         print(f"Error in process_data: {str(e)}")  # Add this line
         raise HTTPException(status_code=500, detail=str(e))
 
-@fastapi_app.get("/api/status")
+@app.get("/api/status")
 async def get_status():
     return backtest_status
 
@@ -122,7 +112,7 @@ def cleanup_logs_files():
             new_file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
             os.rename(file_path, new_file_path)
         
-@fastapi_app.get("/api/tearsheet")
+@app.get("/api/tearsheet")
 async def get_tearsheet():
     try:
         file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
@@ -132,19 +122,5 @@ async def get_tearsheet():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Start Flask and FastAPI in parallel
-def start_flask():
-    flask_app.run(host="0.0.0.0", port=5000)
-
-def start_fastapi():
-    uvicorn.run(fastapi_app, host="0.0.0.0", port=8000)
-
-if __name__ == "__main__":
-    flask_process = Process(target=start_flask)
-    fastapi_process = Process(target=start_fastapi)
-
-    flask_process.start()
-    fastapi_process.start()
-
-    flask_process.join()
-    fastapi_process.join()
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=8000)

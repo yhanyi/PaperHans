@@ -42,7 +42,9 @@ export default function BacktestInput() {
       toast.error("Please sign in to run a backtest.");
       return;
     }
-    toast.info("Backtest is running, you will be notified when it's done.");
+    toast.info(
+      "Backtest is running, you will be notified when it's done. Estimated time: 2 minutes."
+    );
     try {
       console.log("Sending request...");
       const response = await fetch("http://0.0.0.0:8000/api/process", {
@@ -69,7 +71,9 @@ export default function BacktestInput() {
       if (data.error) {
         toast.error("An error occurred: " + data.error);
       } else {
-        toast.success("Backtest complete!");
+        toast.success(
+          "Backtest complete! Check the playground page again to view the tearsheet."
+        );
         setTearsheetDone(true);
       }
     } catch (error: any) {
