@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 import os
 import datetime
 import trading_script as trade
-import uvicorn
 from modelzoo import analyze_sentiment
 
 load_dotenv()
