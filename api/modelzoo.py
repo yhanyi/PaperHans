@@ -3,15 +3,11 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# Initialize ProsusAI/finbert
 tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
 model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert").to(device)
 labels = ["positive", "negative", "neutral"]
 
 def finbert_estimate_sentiment(news):
-    """
-    Takes a list of news and returns the general sentiment of the news.
-    """
     if not news:
         return 0, labels[-1]
 
@@ -21,3 +17,12 @@ def finbert_estimate_sentiment(news):
     probability = result[torch.argmax(result)]
     sentiment = labels[torch.argmax(result)]
     return probability, sentiment
+
+def analyze_sentiment(news):
+    for item in news:
+        try:
+            probability, sentiment = finbert_estimate_sentiment(item['info'])
+            item['sentiment'] = sentiment.capitalize()
+        except:
+            item['sentiment'] = 'Error'
+    return news
