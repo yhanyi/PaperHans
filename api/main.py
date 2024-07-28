@@ -6,13 +6,10 @@ import requests
 from dotenv import load_dotenv
 import os
 import datetime
-import uvicorn
 from lumibot.brokers import Alpaca
 from lumibot.backtesting import YahooDataBacktesting
 from lumibot.strategies.strategy import Strategy
 from datetime import datetime, timedelta
-import json
-from firebase_admin import credentials, initialize_app, firestore
 
 load_dotenv()
 
@@ -39,10 +36,6 @@ CONSTANTS
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 LOGS_DIRECTORY = os.path.join(os.path.dirname(__file__), '../logs')
 backtest_status = {"status": "idle"}
-firebase_config = json.loads(os.getenv("FIREBASE_JSON"))
-cred = credentials.Certificate(firebase_config)
-initialize_app(cred)
-db = firestore.client()
 
 """
 TYPINGS
@@ -52,7 +45,8 @@ class BacktestParameters(BaseModel):
     year: str
     benchmark: str
     cashAtRisk: str
-    userId: str
+    apiKey: str
+    apiSecret: str
 
 """
 UTIL FUNCTIONS
@@ -97,21 +91,6 @@ def cleanup_logs_files():
             new_file_path = os.path.join(LOGS_DIRECTORY, 'tearsheet.html')
             os.rename(file_path, new_file_path)
 
-def get_alpaca_keys(uid):
-    try:
-        doc_ref = db.collection("alpacaKeys").document(uid)
-        doc = doc_ref.get()
-        if doc.exists:
-            data = doc.to_dict()
-            if data and "apiKey" in data and "apiSecret" in data:
-                return data["apiKey"], data["apiSecret"]
-            else:
-                raise ValueError("Alpaca API keys are incomplete for this user")
-        else:
-            raise ValueError("No Alpaca API keys found for user")
-    
-    except Exception as e:
-        raise
 class MLTrader(Strategy):
     def initialize(self, symbol, cash_at_risk=0.5):
         self.symbol = symbol
@@ -149,10 +128,9 @@ def init_broker(alpaca_api_key, alpaca_api_secret):
     broker = Alpaca(ALPACA_CREDS)
     return broker
 
-async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
+async def backtestStrategy(symbol, year, benchmark, cash_at_risk, alpaca_key, alpaca_secret):
   try:
-    alpaca_api_key, alpaca_api_secret = get_alpaca_keys(user_id)
-    broker = init_broker(alpaca_api_key, alpaca_api_secret)
+    broker = init_broker(alpaca_key, alpaca_secret)
     strategy = MLTrader(name="mlstrategy",
                         broker=broker,
                         parameters={
@@ -195,7 +173,7 @@ def get_news():
 async def process_data(bp: BacktestParameters):
     try:
         backtest_status["status"] = "running"
-        result = await backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk), bp.userId)
+        result = await backtestStrategy(bp.symbol, int(bp.year), bp.benchmark, float(bp.cashAtRisk), bp.apiKey, bp.apiSecret)
         backtest_status["status"] = "complete"
         cleanup_logs_files()
         return {"result": result}
