@@ -68,10 +68,7 @@ export default function TearsheetViewer() {
 
   const downloadTearsheet = async () => {
     try {
-      const response = await fetch(
-        // `/api/tearsheet?timestamp=${new Date().getTime()}`
-        "/api/tearsheet"
-      );
+      const response = await fetch("/api/tearsheet");
       if (!response.ok) {
         toast.error("Error downloading tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
@@ -124,12 +121,14 @@ export default function TearsheetViewer() {
           <p>No tearsheet available</p>
         )}
         {tearsheetDone && showTearsheet && (
-          <iframe
-            src={tearsheetUrl}
-            title="Tearsheet"
-            width="100%"
-            height="600px"
-          ></iframe>
+          <div className="bg-white w-screen">
+            <iframe
+              src={tearsheetUrl}
+              title="Tearsheet"
+              width="100%"
+              height="600px"
+            ></iframe>
+          </div>
         )}
       </div>
     </div>
