@@ -7,7 +7,6 @@ import {
   Modal,
   Box,
 } from "@mui/material";
-import { BsInfoCircle } from "react-icons/bs";
 import apiBaseUrl from "@/config";
 
 type NewsItem = {
@@ -127,9 +126,7 @@ const News = () => {
             className="dark:text-white text-black"
             title="Collects cryptocurrency news from NewsAPI, with general market sentiments predicted using a pretrained LLM model (More LLM options soon!). Type something you want to search for, or sort the news!"
           >
-            <IconButton>
-              <BsInfoCircle />
-            </IconButton>
+            <IconButton>ℹ️</IconButton>
           </Tooltip>
         </h1>
         <button
