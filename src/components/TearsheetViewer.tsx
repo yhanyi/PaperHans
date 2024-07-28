@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTearsheetContext } from "./TearsheetContext";
 
-const apiBaseUrl = process.env.API_BASE_URL;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function TearsheetViewer() {
   const {
@@ -28,7 +28,7 @@ export default function TearsheetViewer() {
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        const response = await fetch("/api/status");
+        const response = await fetch(`${apiBaseUrl}/api/status`);
         const data = await response.json();
         setBacktestStatus(data.status);
 
@@ -50,7 +50,7 @@ export default function TearsheetViewer() {
 
   const fetchTearsheet = async () => {
     try {
-      const response = await fetch("/api/tearsheet");
+      const response = await fetch(`${apiBaseUrl}/api/tearsheet`);
       if (!response.ok) {
         toast.error("Error fetching tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
@@ -70,7 +70,7 @@ export default function TearsheetViewer() {
 
   const downloadTearsheet = async () => {
     try {
-      const response = await fetch("/api/tearsheet");
+      const response = await fetch(`${apiBaseUrl}/api/tearsheet`);
       if (!response.ok) {
         toast.error("Error downloading tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
