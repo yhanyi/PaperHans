@@ -8,7 +8,29 @@ import Image from "next/image";
 import MenuDropdown from "@/components/MenuDropdown";
 import AuthButton from "./AuthButton";
 import { useActiveSectionContext } from "./ActiveSectionContext";
-import { links } from "@/lib/links-data";
+
+const links = [
+  {
+    name: "Prices",
+    hash: "/prices",
+  },
+  {
+    name: "Playground",
+    hash: "/playground",
+  },
+  {
+    name: "News",
+    hash: "/news",
+  },
+  {
+    name: "Learn",
+    hash: "/learn",
+  },
+  {
+    name: "Profile",
+    hash: "/profile",
+  },
+];
 
 export default function Header() {
   const { activeSection, setActiveSection, setTimeOfLastClick } =

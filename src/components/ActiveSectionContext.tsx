@@ -1,7 +1,29 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { links } from "@/lib/links-data";
+
+const links = [
+  {
+    name: "Prices",
+    hash: "/prices",
+  },
+  {
+    name: "Playground",
+    hash: "/playground",
+  },
+  {
+    name: "News",
+    hash: "/news",
+  },
+  {
+    name: "Learn",
+    hash: "/learn",
+  },
+  {
+    name: "Profile",
+    hash: "/profile",
+  },
+];
 
 type SectionName = (typeof links)[number]["name"];
 
