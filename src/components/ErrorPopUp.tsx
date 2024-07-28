@@ -25,7 +25,7 @@ const ErrorPopUp = ({ message, onClose }: ErrorProps) => {
         <div className="flex justify-end">
           <button
             onClick={onClose}
-            className={`text-white text-base md:text-md font-medium py-1 px-4 p-3 rounded bg-indigo-600 text-white hover:bg-indigo-500`}
+            className={`text-base md:text-md font-medium py-1 px-4 p-3 rounded bg-indigo-600 text-white hover:bg-indigo-500`}
           >
             Close
           </button>

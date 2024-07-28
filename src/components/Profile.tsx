@@ -48,10 +48,18 @@ const Profile = () => {
       }`}
     >
       <div className="flex items-center space-x-5">
-
-        <button onClick={() => { if(user) setNormalState(!normalState); }}>
+        <button
+          onClick={() => {
+            if (user) setNormalState(!normalState);
+          }}
+        >
           <div className="relative w-24 h-24 overflow-hidden rounded-md">
-            <Image src={user?.photoURL || "/images/defaultProfilePhoto.png"} alt="Profile Photo" fill style={{ objectFit: 'cover' }}/>
+            <Image
+              src={user?.photoURL || "/images/defaultProfilePhoto.png"}
+              alt="Profile Photo"
+              fill
+              style={{ objectFit: "cover" }}
+            />
           </div>
         </button>
 
@@ -103,13 +111,13 @@ const Profile = () => {
                 <button
                   onClick={uploadFile}
                   disabled={uploading}
-                  className={`text-white text-base md:text-md font-medium py-1 px-4 p-3 rounded bg-indigo-600 text-white hover:bg-indigo-500 w-1/2`}
+                  className={`text-base md:text-md font-medium py-1 px-4 p-3 rounded bg-indigo-600 text-white hover:bg-indigo-500 w-1/2`}
                 >
                   {uploading ? "Uploading..." : "Upload File"}
                 </button>
                 <button
                   onClick={() => setNormalState(true)}
-                  className={`text-white text-base md:text-md font-medium py-1 px-4 p-3 rounded bg-red-600 text-white hover:bg-red-500 w-1/2`}
+                  className={`text-base md:text-md font-medium py-1 px-4 p-3 rounded bg-red-600 text-white hover:bg-red-500 w-1/2`}
                 >
                   Return
                 </button>
