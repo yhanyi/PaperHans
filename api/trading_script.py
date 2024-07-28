@@ -1,37 +1,37 @@
 from lumibot.brokers import Alpaca
 from lumibot.backtesting import YahooDataBacktesting
 from lumibot.strategies.strategy import Strategy
-from lumibot.traders import Trader
-from lumibot.entities import Asset
-import math
 from datetime import datetime, timedelta
 from modelzoo import finbert_estimate_sentiment
 from dotenv import load_dotenv
 from alpaca_trade_api.rest import REST
-import os
-import json
 from os import getenv
-from firebase_admin import credentials, initialize_app, firestore, auth
+import json
+from firebase_admin import credentials, initialize_app, firestore
 from dotenv import load_dotenv
 
 load_dotenv()
 
-firebase_config = json.loads(os.getenv("FIREBASE_JSON"))
+firebase_config = json.loads(getenv("FIREBASE_JSON"))
 cred = credentials.Certificate(firebase_config)
 initialize_app(cred)
 db = firestore.client()
 
 def get_alpaca_keys(uid):
-    doc_ref = db.collection("alpacaKeys").document(uid)
-    doc = doc_ref.get()
-    if doc.exists:
-        data = doc.to_dict()
-        if data and "apiKey" in data and "apiSecret" in data:
-            return data["apiKey"], data["apiSecret"]
+    try:
+        doc_ref = db.collection("alpacaKeys").document(uid)
+        doc = doc_ref.get()
+        if doc.exists:
+            data = doc.to_dict()
+            if data and "apiKey" in data and "apiSecret" in data:
+                return data["apiKey"], data["apiSecret"]
+            else:
+                raise ValueError("Alpaca API keys are incomplete for this user")
         else:
-            raise ValueError("Alpaca API keys are incomplete for this user")
-    else:
-        raise ValueError("No Alpaca API keys found for user")
+            raise ValueError("No Alpaca API keys found for user")
+    
+    except Exception as e:
+        raise
 
 class MLTrader(Strategy):
     def initialize(self, symbol, cash_at_risk=0.5, alpaca_api_key=None, alpaca_api_secret=None):
@@ -46,7 +46,7 @@ class MLTrader(Strategy):
     def position_sizing(self):
         cash = self.get_cash()
         last_price = self.get_last_price(self.symbol)
-        quantity = math.floor(cash * self.cash_at_risk / last_price)
+        quantity = int(cash * self.cash_at_risk / last_price)
         return cash, last_price, quantity
     
     def get_dates(self):
@@ -95,16 +95,19 @@ class MLTrader(Strategy):
                 self.submit_order(order)
                 self.last_trade = "sell"
 
-async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
-  try:
-    alpaca_api_key, alpaca_api_secret = get_alpaca_keys(user_id)
-    print(alpaca_api_key, alpaca_api_secret, user_id)
+def init_broker(alpaca_api_key, alpaca_api_secret):
     ALPACA_CREDS = {
       "API_KEY": alpaca_api_key,
       "API_SECRET": alpaca_api_secret,
       "PAPER": True
     }
     broker = Alpaca(ALPACA_CREDS)
+    return broker
+
+async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
+  try:
+    alpaca_api_key, alpaca_api_secret = get_alpaca_keys(user_id)
+    broker = init_broker(alpaca_api_key, alpaca_api_secret)
     strategy = MLTrader(name="mlstrategy",
                         broker=broker,
                         parameters={
@@ -131,7 +134,7 @@ async def backtestStrategy(symbol, year, benchmark, cash_at_risk, user_id):
         show_tearsheet=False,
         show_plot=False
     )
-    state = "Backtest Complete"
+    state = "Completed"
   except:
-     state = "Error encountered while backtesting."
+     state = "Error"
   return state

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTearsheetContext } from "@/components/TearsheetContext";
 import { Tooltip, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { app } from "@/app/firebase/config";
 
 export default function BacktestInput() {
@@ -14,7 +14,6 @@ export default function BacktestInput() {
   const [benchmark, setBenchmark] = useState<string>("");
   const [cashAtRisk, setCashAtRisk] = useState<string>("");
   const [response, setResponse] = useState<number | string>("");
-  const [user, setUser] = useState<User | null>(null);
 
   const handleTradeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSymbol(event.target.value);
@@ -42,10 +41,12 @@ export default function BacktestInput() {
       toast.error("Please sign in to run a backtest.");
       return;
     }
-    toast.info("Backtest is running, you will be notified when it's done.");
+    toast.info(
+      "Backtest is running, you will be notified when it's done. Estimated time: 2 minutes."
+    );
     try {
       console.log("Sending request...");
-      const response = await fetch("http://0.0.0.0:8000/api/process", {
+      const response = await fetch("/api/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +70,9 @@ export default function BacktestInput() {
       if (data.error) {
         toast.error("An error occurred: " + data.error);
       } else {
-        toast.success("Backtest complete!");
+        toast.success(
+          "Backtest complete! Check the playground page again to view the tearsheet."
+        );
         setTearsheetDone(true);
       }
     } catch (error: any) {
