@@ -13,7 +13,7 @@ type NewsItem = {
   title: string;
   info: string;
   url: string;
-  sentiment: string;
+  // sentiment: string;
 };
 
 const News = () => {
@@ -62,10 +62,10 @@ const News = () => {
     const selectedSort = event.target.value;
     setSortBy((prevSortBy) => {
       if (prevSortBy === selectedSort) {
-        if (selectedSort === "sentiment") {
-          const reversedNews = [...news].reverse();
-          setNews(reversedNews);
-        }
+        // if (selectedSort === "sentiment") {
+        //   const reversedNews = [...news].reverse();
+        //   setNews(reversedNews);
+        // }
         if (selectedSort === "publishedAt") {
           fetchNews();
         }
@@ -93,15 +93,16 @@ const News = () => {
     .sort((a: NewsItem, b: NewsItem) => {
       if (sortBy === "title") {
         return a.title.localeCompare(b.title);
-      } else if (sortBy === "sentiment") {
-        const sentimentOrder: { [key: string]: number } = {
-          Positive: 1,
-          Neutral: 2,
-          Negative: 3,
-          Error: 4,
-        };
-        return sentimentOrder[a.sentiment] - sentimentOrder[b.sentiment];
       }
+      // else if (sortBy === "sentiment") {
+      //   const sentimentOrder: { [key: string]: number } = {
+      //     Positive: 1,
+      //     Neutral: 2,
+      //     Negative: 3,
+      //     Error: 4,
+      //   };
+      //   return sentimentOrder[a.sentiment] - sentimentOrder[b.sentiment];
+      // }
       return 0;
     });
 
@@ -124,7 +125,7 @@ const News = () => {
           Crypto News Scraper
           <Tooltip
             className="dark:text-white text-black"
-            title="Collects cryptocurrency news from NewsAPI, with general market sentiments predicted using a pretrained LLM model (More LLM options soon!). Type something you want to search for, or sort the news!"
+            title="Collects cryptocurrency news from NewsAPI, with general market sentiments predicted using a pretrained LLM model (not available on prod due to size limits of deployment). Type something you want to search for, or sort the news!"
           >
             <IconButton>ℹ️</IconButton>
           </Tooltip>
@@ -150,7 +151,7 @@ const News = () => {
           className="ml-4 p-2 border rounded-md text-black"
         >
           <option value="publishedAt">Published Date</option>
-          <option value="sentiment">Sentiment</option>
+          {/* <option value="sentiment">Sentiment</option> */}
           <option value="title">Title</option>
         </select>
       </div>
@@ -188,7 +189,7 @@ const News = () => {
               onClick={() => toggleExpand(index)}
             >
               <span>{item.title}</span>
-              <span
+              {/* <span
                 className={`ml-2 px-2 py-1 rounded ${
                   item.sentiment === "Positive"
                     ? "bg-green-200 dark:bg-green-600"
@@ -198,7 +199,7 @@ const News = () => {
                 }`}
               >
                 {item.sentiment}
-              </span>
+              </span> */}
             </div>
             {expanded === index && (
               <div className="p-4 border-t">
