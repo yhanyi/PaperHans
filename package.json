@@ -41,9 +41,5 @@
     "node": "20.x",
     "npm": "10.x"
   },
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:5000"
-    }
-  }
+  "proxy": "http://localhost:5000"
 }
