@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTearsheetContext } from "@/components/TearsheetContext";
 import { Tooltip, IconButton } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
+import { BsInfoCircle } from "react-icons/bs";
 import { getAuth } from "firebase/auth";
 import { app } from "@/app/firebase/config";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
@@ -108,7 +108,7 @@ export default function BacktestInput() {
               title="A unique identifier for the asset or stock you wish to backtest. For example, 'SPY' represents the SPDR S&P 500 ETF."
             >
               <IconButton>
-                <InfoIcon />
+                <BsInfoCircle />
               </IconButton>
             </Tooltip>
           </div>
@@ -129,7 +129,7 @@ export default function BacktestInput() {
               title="Select the specific year you want to analyze for your trading strategy. Backtesting allows you to simulate trades based on historical data from this chosen year."
             >
               <IconButton>
-                <InfoIcon />
+                <BsInfoCircle />
               </IconButton>
             </Tooltip>
           </div>
@@ -150,7 +150,7 @@ export default function BacktestInput() {
               title="Compare your trading strategy against a benchmark asset or stock. This could be another ETF or stock index like 'QQQ' (PowerShares QQQ Trust)"
             >
               <IconButton>
-                <InfoIcon />
+                <BsInfoCircle />
               </IconButton>
             </Tooltip>
           </div>
@@ -172,7 +172,7 @@ export default function BacktestInput() {
               title="Determines the portion of your total capital that you're willing to risk on each trade. The default value of 0.5 means risking 50% of your capital on each trade."
             >
               <IconButton>
-                <InfoIcon />
+                <BsInfoCircle />
               </IconButton>
             </Tooltip>
           </div>
