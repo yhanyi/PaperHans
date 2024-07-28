@@ -5,13 +5,50 @@ import { useTheme } from "../../components/ThemeContext";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import LearnInfo from "@/components/LearnInfo";
+import Tutorial from "@/components/Tutorial";
 
 export default function Home() {
 
   const router = useRouter();
   const { theme } = useTheme();
   const [ clickedHome, setClickedHome ] = useState<boolean>(false);
+
+  const TITLE = [
+    "About Us",
+    "Profile",
+    "Profile - Change Profile Picture",
+    "Prices",
+    "Prices - Vote Sentiments",
+    "Playground",
+    "Playground - View Tearsheet",
+    "News",
+    "Learn",
+    "Learn - Lesson and Trivia"
+  ]
+  const IMAGE_URL = [
+    "https://drive.google.com/uc?export=view&id=1jG4Ns5ELwErGP_bJYJhTiV9hmoZrUAYV",
+    "https://drive.google.com/uc?export=view&id=1TOwzsPatS1jwYeXdv3CvpGFP9lV1D7Zs",
+    "https://drive.google.com/uc?export=view&id=1sb20bFKCKsfws3ds4wXQn9Tx3f1X9pQO",
+    "https://drive.google.com/uc?export=view&id=1T3X605kb1pV_UDpYkkETCappDlx99eEn",
+    "https://drive.google.com/uc?export=view&id=1Fv6cl0FwTGLoqRr-70rA4Vd-57DH9WoU",
+    "https://drive.google.com/uc?export=view&id=1wNRlXWsmEku4F9m649DJAgy5EHxglxR6",
+    "https://drive.google.com/uc?export=view&id=1VHbNmSXMqjJ65z0DrvxlOhlDo4VjZsTD",
+    "https://drive.google.com/uc?export=view&id=1IUabF4mE4wTTtahT3c4N-MbxEVJ_lEqV",
+    "https://drive.google.com/uc?export=view&id=1Q9jEzG5RmYxBElmeJ6x4b-nel3R0QpLn",
+    "https://drive.google.com/uc?export=view&id=1Hlb1EX9xs8fsDOa6_94wsNEENIZQf_8N"
+  ]
+  const CONTENT = [    
+    "Visit the About Us page to gain insights on the motivation and aim behind PaperHans. Project deliverables such as the README, CHANGELOG, Poster and Video are also accessible from the page.",
+    "Visit the Profile page to view your personal information as well as see Achievements badges earned.",
+    "Click on your profile picture to initiate the Change Profile Picture function should you wish to swap it out for a fresh one. Once complete, you can either click on the profile picture again or press the Return button to return back.",
+    "Visit the Prices page for real-time prices to stay informed on the latest market movements.",
+    "Log in to vote on how you are feeling about the recent Cryptocurrency market and as well as to view the current sentiments of fellow PaperHans users.",
+    "Visit the Playground page for a risk-free platform to create customised trading strategies and backtest them.",
+    "Input and submit the parameters you would like to backtest with, then sit back while we generate the tearsheet for you. After tearsheet has been generated, simply scroll down to view.",
+    "Visit the News page for real-time market insights as well as sentimental analysis by the FinBERT Natural Language Processing model.",
+    "Visit the Learn page to access to curated datasets prepared by our field experts with a deep understanding of the domain as an alternative source of resource to NLP models.",
+    "Complete the interactive Trivia after the lessons to assess your understanding as well as unlock new achievements."
+  ]
 
   const tryHomeRedirect = () => {
     if (!clickedHome) {
@@ -53,7 +90,18 @@ export default function Home() {
         <button onClick={tryHomeRedirect} className={`${clickedHome?"bg-red-600":"bg-indigo-600"} text-white text-base text-lg font-medium w-[10rem] py-2 rounded shadow-[3px_3px_0_black] hover:shadow-[1px_1px_0_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all`}>
           {clickedHome?"Confirm?":"End Tutorial"}
         </button>
-      
+
+        {TITLE.map((title, index) => (
+          <Tutorial
+            key={index}
+            title={title}
+            imageUrl={IMAGE_URL[index]}
+            content={CONTENT[index]}
+          />
+        ))}
+
+        <div className="h-4"></div>
+
       </div>
     </main>
   );
