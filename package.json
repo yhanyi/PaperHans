@@ -16,7 +16,6 @@
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.4",
     "axios": "^1.7.2",
-    "clsx": "^2.1.1",
     "concurrently": "^8.2.2",
     "firebase": "^10.12.2",
     "framer-motion": "^11.2.6",

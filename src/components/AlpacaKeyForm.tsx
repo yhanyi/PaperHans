@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { app } from "@/app/firebase/config";
 import { User } from "firebase/auth";
 import { toast } from "react-toastify";

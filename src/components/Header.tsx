@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import clsx from "clsx";
 import Image from "next/image";
 import MenuDropdown from "@/components/MenuDropdown";
 import AuthButton from "./AuthButton";
