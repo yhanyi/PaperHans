@@ -6,7 +6,8 @@ import { Tooltip, IconButton } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { app } from "@/app/firebase/config";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import apiBaseUrl from "@/config";
+
+const apiBaseUrl = process.env.API_BASE_URL;
 
 const getAlpacaKeys = async (userId: string) => {
   const db = getFirestore(app);
@@ -60,7 +61,7 @@ export default function BacktestInput() {
     try {
       const { apiKey, apiSecret } = await getAlpacaKeys(user.uid);
       console.log("Sending request...", apiKey, apiSecret);
-      const response = await fetch(`${apiBaseUrl}/api/process`, {
+      const response = await fetch("/api/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
