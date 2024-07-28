@@ -8,6 +8,7 @@ import {
   Box,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import apiBaseUrl from "@/config";
 
 type NewsItem = {
   title: string;
@@ -28,7 +29,7 @@ const News = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/api/news");
+      const response = await axios.get(`${apiBaseUrl}/api/news`);
       console.log("News data:", response.data);
       if (response.status === 429) {
         setError("Rate limit exceeded. Please try again later.");
