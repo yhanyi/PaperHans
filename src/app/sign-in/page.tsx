@@ -9,18 +9,11 @@ import { FcGoogle } from "react-icons/fc";
 import ErrorPopUp from "../../components/ErrorPopUp";
 
 const SignIn = () => {
-  // Miscellaneous.
   const router = useRouter();
   const { theme } = useTheme();
-
-  // User fields.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // Firebase.
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
-
-  // For Error handling, throw ErrorPopUp.
   const [error, setError] = useState("");
 
   const handleSignIn = async () => {

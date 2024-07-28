@@ -21,6 +21,9 @@
 *.pem
 /api/__pycache__
 /__tests__
+app-router-context-provider-mock.tsx
+jest.config.ts
+jest.setup.ts
 
 # debug
 npm-debug.log*
