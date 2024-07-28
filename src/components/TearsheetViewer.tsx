@@ -48,10 +48,7 @@ export default function TearsheetViewer() {
 
   const fetchTearsheet = async () => {
     try {
-      const response = await fetch(
-        // `/api/tearsheet?timestamp=${new Date().getTime()}`
-        "/api/tearsheet"
-      );
+      const response = await fetch("/api/tearsheet");
       if (!response.ok) {
         toast.error("Error fetching tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");

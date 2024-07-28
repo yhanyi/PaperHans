@@ -6,6 +6,19 @@ import { Tooltip, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { getAuth } from "firebase/auth";
 import { app } from "@/app/firebase/config";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+
+const getAlpacaKeys = async (userId: string) => {
+  const db = getFirestore(app);
+  const docRef = doc(db, "alpacaKeys", userId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    return { apiKey: data.apiKey, apiSecret: data.apiSecret };
+  } else {
+    throw new Error("Alpaca API Key or Secret not found.");
+  }
+};
 
 export default function BacktestInput() {
   const { setTearsheetDone } = useTearsheetContext();
@@ -45,7 +58,8 @@ export default function BacktestInput() {
       "Backtest is running, you will be notified when it's done. Estimated time: 2 minutes."
     );
     try {
-      console.log("Sending request...");
+      const { apiKey, apiSecret } = await getAlpacaKeys(user.uid);
+      console.log("Sending request...", apiKey, apiSecret);
       const response = await fetch("/api/process", {
         method: "POST",
         headers: {
@@ -56,7 +70,8 @@ export default function BacktestInput() {
           year,
           benchmark,
           cashAtRisk,
-          userId: user.uid,
+          apiKey,
+          apiSecret,
         }),
       });
       console.log("Response received:", response.status);
