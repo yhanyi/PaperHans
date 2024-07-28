@@ -31,7 +31,8 @@ const News = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${apiBaseUrl}/api/news`);
+      // const response = await axios.get(`${apiBaseUrl}/api/news`);
+      const response = await axios.get("/api/news");
       console.log("News data:", response.data);
       if (response.status === 429) {
         setError("Rate limit exceeded. Please try again later.");
