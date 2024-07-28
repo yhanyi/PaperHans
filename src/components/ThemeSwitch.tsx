@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useTheme } from "./ThemeContext";
-import { BsMoon, BsSun } from "react-icons/bs";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { AchievementsHelper } from "@/components/Achievements";
@@ -19,7 +18,7 @@ export default function ThemeSwitch() {
         if (user) AchievementsHelper(user, "tryToggleTheme");
       }}
     >
-      {theme === "light" ? <BsSun /> : <BsMoon />}
+      {theme === "light" ? <span>☀️</span> : <span>🌙</span>}
     </button>
   );
 }

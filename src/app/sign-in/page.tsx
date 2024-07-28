@@ -5,7 +5,6 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 import { useTheme } from "../../components/ThemeContext";
-import { FcGoogle } from "react-icons/fc";
 import ErrorPopUp from "../../components/ErrorPopUp";
 
 const SignIn = () => {
@@ -101,7 +100,6 @@ const SignIn = () => {
           onClick={handleGoogleSignIn}
           className={`flex items-center justify-center w-full mt-4 rounded ${buttonStyle} ${textStyle} border hover:hover:translate-x-[2px] hover:translate-y-[2px] transition-all`}
         >
-          <FcGoogle className="w-12 h-12 mr-2" />
           Sign In with Google
         </button>
       </div>
