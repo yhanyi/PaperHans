@@ -26,7 +26,7 @@ export default function TearsheetViewer() {
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        const response = await fetch(`/api/status`);
+        const response = await fetch("/api/status");
         const data = await response.json();
         setBacktestStatus(data.status);
 
@@ -49,7 +49,8 @@ export default function TearsheetViewer() {
   const fetchTearsheet = async () => {
     try {
       const response = await fetch(
-        `/api/tearsheet?timestamp=${new Date().getTime()}`
+        // `/api/tearsheet?timestamp=${new Date().getTime()}`
+        "/api/tearsheet"
       );
       if (!response.ok) {
         toast.error("Error fetching tearsheet: " + response.statusText);
@@ -71,7 +72,8 @@ export default function TearsheetViewer() {
   const downloadTearsheet = async () => {
     try {
       const response = await fetch(
-        `/api/tearsheet?timestamp=${new Date().getTime()}`
+        // `/api/tearsheet?timestamp=${new Date().getTime()}`
+        "/api/tearsheet"
       );
       if (!response.ok) {
         toast.error("Error downloading tearsheet: " + response.statusText);
