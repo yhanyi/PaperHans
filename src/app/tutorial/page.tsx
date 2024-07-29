@@ -96,7 +96,7 @@ export default function Home() {
           } max-w-[20rem]`}
         >
           <a
-            href="https://docs.google.com/document/d/1YYhPiGj3DJEe8xhyofTemyj72_vM5KJCrqd1i6EiiDM/edit#heading=h.xen903qbfnbs"
+            href="https://drive.google.com/file/d/1uRRdJKrzKOWWU5ee1RHzcjpWaHNvb5w-"
             target="_blank"
             rel="noopener noreferrer"
           >

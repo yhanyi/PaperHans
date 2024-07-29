@@ -5,9 +5,8 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 import { useTheme } from "../../components/ThemeContext";
+import Image from "next/image";
 import ErrorPopUp from "../../components/ErrorPopUp";
-
-
 
 const SignIn = () => {
   const router = useRouter();
@@ -100,8 +99,14 @@ const SignIn = () => {
         <h1 className="text-sm font-medium">Alternative sign-in options:</h1>
         <button
           onClick={handleGoogleSignIn}
-          className={`flex items-center justify-center w-full mt-4 rounded ${buttonStyle} ${textStyle} border hover:hover:translate-x-[2px] hover:translate-y-[2px] transition-all`}
+          className={`flex items-center justify-center w-full mt-4 rounded p-2 ${buttonStyle} ${textStyle} border hover:hover:translate-x-[2px] hover:translate-y-[2px] transition-all`}
         >
+          <Image
+            src="/images/GoogleIcon.png"
+            alt="Google Icon"
+            width={36}
+            height={36}
+          />
           Sign In with Google
         </button>
       </div>

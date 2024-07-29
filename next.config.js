@@ -4,10 +4,12 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/api/:path*"
-            : "/api/",
+        destination: process.env.NEXT_PUBLIC_API_BASE_URL + "/api/:path*",
+        // source: "/api/:path*",
+        // destination:
+        //   process.env.NODE_ENV === "development"
+        //     ? "http://127.0.0.1:8000/api/:path*"
+        //     : "/api/",
       },
     ];
   },

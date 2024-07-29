@@ -12,15 +12,15 @@ Proposed Level of Achievement: Apollo 11
 
 **Relevant Links**:
 
-Deployment:             https://paperhans.vercel.app/
+Deployment:             
 
-Project README (full):  https://docs.google.com/document/d/1YYhPiGj3DJEe8xhyofTemyj72_vM5KJCrqd1i6EiiDM
+Project README (full):  https://drive.google.com/file/d/1uRRdJKrzKOWWU5ee1RHzcjpWaHNvb5w-
 
-Project CHANEGLOG:      https://shorturl.at/pKfKn
+Project CHANEGLOG:      https://drive.google.com/file/d/15P26tytC90mvTy_gadeJlTv1AqfpX2uK
 
-Project Poster:         https://drive.google.com/file/d/1uerqaLgKDD7drkws2qjrKc0zp6OUBqp0/view?usp=drive_link
+Project Poster:         https://drive.google.com/file/d/13idQZ0195KBFSjNdOY-2ujmaKp7ZGFeh
 
-Project Video:          https://drive.google.com/file/d/1Ue0KMkW2lMzn7q4H1Z6YpGY2aUsGw7b7/view?usp=drive_link
+Project Video:          https://drive.google.com/file/d/140W2JeR3sWgXMgSB0ukrpVTcokI_kUfi
 
 **Setup**
 

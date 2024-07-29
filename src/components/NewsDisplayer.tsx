@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mui/material";
 
-const apiBaseUrl = process.env.API_BASE_URL;
+const apiBaseUrl = process.env.API_BASE_URL || "http://localhost:8000";
 
 type NewsItem = {
   title: string;
@@ -26,13 +26,11 @@ const News = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
 
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
   const fetchNews = async () => {
     setLoading(true);
     try {
-      // const response = await axios.get(`${apiBaseUrl}/api/news`);
-      const response = await axios.get("/api/news");
+      const response = await axios.get(`${apiBaseUrl}/api/news`);
+      // const response = await axios.get("/api/news");
       console.log("News data:", response.data);
       if (response.status === 429) {
         setError("Rate limit exceeded. Please try again later.");

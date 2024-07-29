@@ -54,7 +54,7 @@ export default function Home() {
         <div className="h-4"></div>
 
         <div className={`p-2 rounded shadow-md ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"} max-w-[20rem]`}>
-          <a href="https://docs.google.com/document/d/1YYhPiGj3DJEe8xhyofTemyj72_vM5KJCrqd1i6EiiDM/edit#heading=h.xen903qbfnbs" target="_blank" rel="noopener noreferrer">
+          <a href="https://drive.google.com/file/d/1uRRdJKrzKOWWU5ee1RHzcjpWaHNvb5w-" target="_blank" rel="noopener noreferrer">
             <h1 className="text-md font-lg text-center hover:underline">
               PaperHans Project README 🔗
             </h1>
@@ -64,7 +64,7 @@ export default function Home() {
         <div className="h-4"></div>
 
         <div className={`p-2 rounded shadow-md ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"} max-w-[20rem]`}>
-          <a href="https://docs.google.com/spreadsheets/d/1rY75tFdyqRqVAe7jtrbcQ3uYtsDIPZN3vAa8r9LYMJA/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">
+          <a href="https://drive.google.com/file/d/15P26tytC90mvTy_gadeJlTv1AqfpX2uK" target="_blank" rel="noopener noreferrer">
             <h1 className="text-md font-lg text-center hover:underline">
               PaperHans Project CHANGELOG 🔗
             </h1>
@@ -101,7 +101,7 @@ export default function Home() {
         <div className={`p-4 rounded shadow-md max-w-lg w-full ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"}`}>
           <h1 className="text-xl font-bold mb-4 text-center">Project Poster</h1>
           <h2 className="flex justify-center">
-            <Image src="https://drive.google.com/uc?id=1uerqaLgKDD7drkws2qjrKc0zp6OUBqp0" alt="Project Poster" width={464} height={0}/>
+            <Image src="https://drive.google.com/uc?id=13idQZ0195KBFSjNdOY-2ujmaKp7ZGFeh" alt="Project Poster" width={464} height={0}/>
           </h2>
         </div>
 
@@ -110,7 +110,7 @@ export default function Home() {
         <div className={`p-4 rounded shadow-md max-w-lg w-full ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-800"}`}>
           <h1 className="text-xl font-bold mb-4 text-center">Project Video</h1>
           <h2 className="flex justify-center">
-            <iframe data-testid='project-video' src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowFullScreen style={{ width: '464px', height: '261px', border: 'none' }}/>
+            <iframe data-testid='project-video' src="https://www.youtube.com/embed/Tw-SxNs0SXg" allowFullScreen style={{ width: '464px', height: '261px', border: 'none' }}/>
           </h2>
         </div>
 

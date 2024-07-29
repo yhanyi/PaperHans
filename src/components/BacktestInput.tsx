@@ -7,7 +7,8 @@ import { getAuth } from "firebase/auth";
 import { app } from "@/app/firebase/config";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const apiBaseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 
 const getAlpacaKeys = async (userId: string) => {
   const db = getFirestore(app);
