@@ -30,7 +30,6 @@ export default function TearsheetViewer() {
     const checkStatus = async () => {
       try {
         const response = await fetch(`${apiBaseUrl}/api/status`);
-        // const response = await fetch("/api/status");
         const data = await response.json();
         setBacktestStatus(data.status);
 
@@ -53,7 +52,6 @@ export default function TearsheetViewer() {
   const fetchTearsheet = async () => {
     try {
       const response = await fetch(`${apiBaseUrl}/api/tearsheet`);
-      // const response = await fetch("/api/tearsheet");
       if (!response.ok) {
         toast.error("Error fetching tearsheet: " + response.statusText);
         throw new Error("Failed to fetch tearsheet");
