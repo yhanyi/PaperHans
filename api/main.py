@@ -32,6 +32,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Received request: {request.method} {request.url}")
+    logger.info(f"Headers: {request.headers}")
+    response = await call_next(request)
+    logger.info(f"Response status: {response.status_code}")
+    return response
+
 @app.middleware("http")
 async def handle_forwarded_request(request, call_next):
     if "X-Forwarded-For" in request.headers:
