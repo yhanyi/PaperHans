@@ -1,3 +1,3 @@
 # web:npm install && npm run dev
 web: npm start
-worker: uvicorn api.main:app --host=0.0.0.0 --port=8000 --forwarded-allow-ips="*"
+worker: python3 -m uvicorn api.main:app --host=0.0.0.0 --port=${PORT:-8000} --reload
