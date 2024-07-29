@@ -1,6 +1,6 @@
 # PaperHans
 
-This is the code repository for PaperHans project, NUS Orbital 2024.
+This is the code repository for PaperHans project, NUS Orbital 2024. Note: If the Playground/News page do not work on Windows, try viewing it on MacOS instead.
 
 **Team Han2**:
 
