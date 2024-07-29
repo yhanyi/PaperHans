@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from pydantic import BaseModel
 import requests
 from dotenv import load_dotenv
@@ -23,11 +24,19 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
+    TrustedHostMiddleware,
+    allowed_hosts=["*"],
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def handle_forwarded_request(request, call_next):
+    if "X-Forwarded-For" in request.headers:
+        request.scope['client'] = (request.headers["X-Forwarded-For"].split(',')[0], 0)
+    return await call_next(request)
 
 """
 CONSTANTS
