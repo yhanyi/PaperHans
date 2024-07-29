@@ -1,3 +1,3 @@
 # web:npm install && npm run dev
 web: npm start
-worker: gunicorn -k uvicorn.workers.UvicornWorker api.main:app --bind 0.0.0.0:8000
+worker: uvicorn api.main:app --host=0.0.0.0 --port=8000 --forwarded-allow-ips="*"
